@@ -46,17 +46,7 @@ Add-Type -AssemblyName System.Windows.Forms
                     </Button.Resources>
                 </Button>
                 
-                <Button Name="NavTweaks" Content="System Tweaks" Height="40" Margin="0,5,0,5" 
-                        Background="Transparent" BorderThickness="0" FontSize="14" FontWeight="SemiBold"
-                        HorizontalContentAlignment="Left" Padding="15,0" Foreground="{DynamicResource NavBtnFg}">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="6"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                
-                <Button Name="NavConfig" Content="Settings" Height="40" Margin="0,5,0,5" 
+                <Button Name="NavUserConfigs" Content="User Configs" Height="40" Margin="0,5,0,5" 
                         Background="Transparent" BorderThickness="0" FontSize="14" FontWeight="SemiBold"
                         HorizontalContentAlignment="Left" Padding="15,0" Foreground="{DynamicResource NavBtnFg}">
                     <Button.Resources>
@@ -130,15 +120,9 @@ Add-Type -AssemblyName System.Windows.Forms
                     </Button>
                 </Grid>
 
-                <!-- Tweaks Panel -->
-                <StackPanel Name="PanelTweaks" Grid.Row="2" Visibility="Collapsed">
-                    <TextBlock Text="Apply custom system modifications, debloat unnecessary background tasks, and optimize performance." 
-                               FontSize="15" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap"/>
-                </StackPanel>
-
-                <!-- Config Panel -->
-                <StackPanel Name="PanelConfig" Grid.Row="2" Visibility="Collapsed">
-                    <TextBlock Text="Update your automation tool settings and manage overarching preferences." 
+                <!-- User Configs Panel -->
+                <StackPanel Name="PanelUserConfigs" Grid.Row="2" Visibility="Collapsed">
+                    <TextBlock Text="Import and Export User Configurations." 
                                FontSize="15" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap"/>
                 </StackPanel>
                 
@@ -166,14 +150,12 @@ catch {
 
 # Map UI Elements to PowerShell Variables
 $NavInstall = $Form.FindName("NavInstall")
-$NavTweaks = $Form.FindName("NavTweaks")
-$NavConfig = $Form.FindName("NavConfig")
+$NavUserConfigs = $Form.FindName("NavUserConfigs")
 $BtnToggleTheme = $Form.FindName("BtnToggleTheme")
 $MainTitle = $Form.FindName("MainTitle")
 
 $PanelInstall = $Form.FindName("PanelInstall")
-$PanelTweaks = $Form.FindName("PanelTweaks")
-$PanelConfig = $Form.FindName("PanelConfig")
+$PanelUserConfigs = $Form.FindName("PanelUserConfigs")
 $PanelWelcome = $Form.FindName("PanelWelcome")
 
 $BtnInstallScoop = $Form.FindName("BtnInstallScoop")
@@ -264,6 +246,45 @@ $excludeLines    </Product>$viProofingProduct
         $Button.Content = "Install $AppName"
         $Button.IsEnabled = $true
     }
+    elseif ($data.handler -eq "searxng") {
+        $Button.Content = "Installing..."
+        $Button.IsEnabled = $false
+        [System.Windows.Forms.Application]::DoEvents()
+
+        try {
+            # Step 1: Verify Docker is available
+            if (-not (Get-Command docker -ErrorAction SilentlyContinue)) {
+                Write-Host "Docker is not installed or not in PATH. Please install Docker first." -ForegroundColor Red
+                $Button.Content = "Docker Not Found"
+                $Button.IsEnabled = $true
+                return
+            }
+
+            # Step 2: Pull the SearxNG image
+            Write-Host "Pulling SearxNG Docker image..." -ForegroundColor Cyan
+            docker pull searxng/searxng
+            [System.Windows.Forms.Application]::DoEvents()
+
+            # Step 3: Create data directory for persistent config
+            $searxngData = Join-Path $env:LOCALAPPDATA "SearxNG"
+            if (-not (Test-Path $searxngData)) {
+                New-Item -ItemType Directory -Path $searxngData -Force | Out-Null
+                Write-Host "Created SearxNG data directory: $searxngData" -ForegroundColor Cyan
+            }
+
+            # Step 4: Run the container on port 8888 with auto-restart and volume
+            Write-Host "Starting SearxNG container on port 8888..." -ForegroundColor Cyan
+            docker run -d -p 8888:8080 --name searxng --restart unless-stopped -v "${searxngData}:/etc/searxng" searxng/searxng
+            Write-Host "SearxNG is running at http://localhost:8888" -ForegroundColor Green
+
+            $Button.Content = "SearxNG Installed"
+        }
+        catch {
+            Write-Host "SearxNG installation failed: $_" -ForegroundColor Red
+            $Button.Content = "Install Failed"
+            $Button.IsEnabled = $true
+        }
+    }
 }
 
 # Load Applications Config and Generate UI Checkboxes
@@ -289,7 +310,7 @@ if (Test-Path $appsConfigPath) {
 
             foreach ($app in $category.Value) {
                 # Advanced Configuration items render sub-app checkboxes inline
-                if ($app.handler) {
+                if ($app.handler -and $app.handler -eq "odt") {
                     # App name label
                     $label = New-Object System.Windows.Controls.TextBlock
                     $label.Text = $app.name
@@ -401,6 +422,52 @@ if (Test-Path $appsConfigPath) {
 
                     $groupStack.Children.Add($masOnlineBtn) | Out-Null
                 }
+                elseif ($app.handler -and $app.handler -eq "searxng") {
+                    # SearxNG section label
+                    $label = New-Object System.Windows.Controls.TextBlock
+                    $label.Text = $app.name
+                    $label.FontWeight = "SemiBold"
+                    $label.FontSize = 14
+                    $label.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#4338CA"))
+                    $label.Margin = "0,14,0,4"
+                    $groupStack.Children.Add($label) | Out-Null
+
+                    # Description
+                    $desc = New-Object System.Windows.Controls.TextBlock
+                    $desc.Text = "Privacy-respecting metasearch engine via Docker.`nRuns on port 8888, auto-starts on boot."
+                    $desc.TextWrapping = "Wrap"
+                    $desc.FontSize = 12
+                    $desc.FontStyle = "Italic"
+                    $desc.Margin = "0,2,0,6"
+                    $desc.SetResourceReference([System.Windows.Controls.TextBlock]::ForegroundProperty, "TextBody")
+                    $groupStack.Children.Add($desc) | Out-Null
+
+                    # Store handler reference
+                    $global:AdvancedHandlerCheckboxes[$app.name] = @{
+                        handler = $app.handler
+                        checkboxes = @()
+                    }
+
+                    # Install button
+                    $searxBtn = New-Object System.Windows.Controls.Button
+                    $searxBtn.Content = "Install $($app.name)"
+                    $searxBtn.Tag = $app.name
+                    $searxBtn.Margin = "0,4,0,4"
+                    $searxBtn.Padding = "12,6"
+                    $searxBtn.FontSize = 13
+                    $searxBtn.FontWeight = "SemiBold"
+                    $searxBtn.Background = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#10B981"))
+                    $searxBtn.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("White"))
+                    $searxBtn.BorderThickness = "0"
+
+                    $searxBtn.Add_Click({
+                        param($s, $e)
+                        $clickedAppName = $s.Tag
+                        Invoke-AdvancedInstall -AppName $clickedAppName -Button $s
+                    }.GetNewClosure())
+
+                    $groupStack.Children.Add($searxBtn) | Out-Null
+                }
                 else {
                     # Standard apps render as checkboxes
                     $cb = New-Object System.Windows.Controls.CheckBox
@@ -489,8 +556,7 @@ $BtnToggleTheme.Add_Click({
 # Helper to hide all panels
 function Hide-AllPanels {
     $PanelInstall.Visibility = "Collapsed"
-    $PanelTweaks.Visibility = "Collapsed"
-    $PanelConfig.Visibility = "Collapsed"
+    $PanelUserConfigs.Visibility = "Collapsed"
     $PanelWelcome.Visibility = "Collapsed"
 }
 
@@ -498,8 +564,7 @@ function Hide-AllPanels {
 function Set-MenuHighlight {
     param([System.Windows.Controls.Button]$SelectedButton)
     $NavInstall.Background = "Transparent"
-    $NavTweaks.Background = "Transparent"
-    $NavConfig.Background = "Transparent"
+    $NavUserConfigs.Background = "Transparent"
     $SelectedButton.SetResourceReference([System.Windows.Controls.Control]::BackgroundProperty, "NavBtnActiveBg")
 }
 
@@ -511,19 +576,11 @@ $NavInstall.Add_Click({
         $PanelInstall.Visibility = "Visible"
     })
 
-
-$NavTweaks.Add_Click({
-        Set-MenuHighlight $NavTweaks
-        $MainTitle.Text = "System Tweaks"
+$NavUserConfigs.Add_Click({
+        Set-MenuHighlight $NavUserConfigs
+        $MainTitle.Text = "User Configs"
         Hide-AllPanels
-        $PanelTweaks.Visibility = "Visible"
-    })
-
-$NavConfig.Add_Click({
-        Set-MenuHighlight $NavConfig
-        $MainTitle.Text = "Configuration & Settings"
-        Hide-AllPanels
-        $PanelConfig.Visibility = "Visible"
+        $PanelUserConfigs.Visibility = "Visible"
     })
 
 $BtnInstallScoop.Add_Click({

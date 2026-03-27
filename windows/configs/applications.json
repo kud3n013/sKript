@@ -113,6 +113,10 @@
         { "name": "Lync (Skype for Business)", "id": "Lync", "default": false },
         { "name": "Bing", "id": "Bing", "default": false }
       ]
+    },
+    {
+      "name": "SearxNG",
+      "handler": "searxng"
     }
   ]
 }

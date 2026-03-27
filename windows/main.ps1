@@ -290,11 +290,12 @@ $excludeLines    </Product>$viProofingProduct
 # Load Applications Config and Generate UI Checkboxes
 $global:AppCheckboxes = @()
 $global:AdvancedHandlerCheckboxes = @{}
-$appsConfigPath = Join-Path $PSScriptRoot "configs\applications.json"
 $appsConfigUrl = "https://raw.githubusercontent.com/kud3n013/setup-script/master/windows/configs/applications.json"
 
 try {
-    if (Test-Path $appsConfigPath) {
+    $appsConfigPath = if ([string]::IsNullOrEmpty($PSScriptRoot)) { $null } else { Join-Path $PSScriptRoot "configs\applications.json" }
+
+    if ($null -ne $appsConfigPath -and (Test-Path $appsConfigPath)) {
         $appsConfig = Get-Content -Raw $appsConfigPath | ConvertFrom-Json
     } else {
         $appsConfig = (Invoke-WebRequest -Uri $appsConfigUrl -UseBasicParsing).Content | ConvertFrom-Json
@@ -398,11 +399,11 @@ try {
                     $masBtn.BorderThickness = "0"
 
                     $masBtn.Add_Click({
-                        $masScript = Join-Path $PSScriptRoot "3rd-party\MAS_AIO.cmd"
-                        if (Test-Path $masScript) {
+                        $masScript = if ([string]::IsNullOrEmpty($PSScriptRoot)) { $null } else { Join-Path $PSScriptRoot "3rd-party\MAS_AIO.cmd" }
+                        if ($null -ne $masScript -and (Test-Path $masScript)) {
                             Start-Process "cmd.exe" -ArgumentList "/c `"$masScript`"" -Verb RunAs
                         } else {
-                            Write-Host "MAS script not found at $masScript" -ForegroundColor Red
+                            Write-Host "MAS script not found locally. Please use the 'Activate Office (MAS Online)' button instead." -ForegroundColor Yellow
                         }
                     })
 

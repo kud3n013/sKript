@@ -25,7 +25,19 @@ A robust, WPF-based graphical user interface (GUI) written in PowerShell for man
   
 ### Usage
 
-Run the setup utility by executing `main.ps1` in a PowerShell terminal:
+**The Easiest Way: Run Directly from the Internet**
+
+You can run the setup utility directly without downloading the repository.
+1. Press `Windows Key + X` and select **Terminal (Admin)** or **Windows PowerShell (Admin)**.
+2. Run the following command:
+
+```powershell
+irm "https://raw.githubusercontent.com/kud3n013/setup-script/master/windows/main.ps1" | iex
+```
+
+**Alternative: Run Locally**
+
+If you have cloned the repository, execute `main.ps1` in a PowerShell terminal:
 
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force

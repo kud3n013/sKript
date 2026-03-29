@@ -163,7 +163,15 @@ Add-Type -AssemblyName System.Windows.Forms
                 <!-- Shortcuts Kreation Panel -->
                 <StackPanel Name="PanelShortcutsKreation" Grid.Row="2" Visibility="Collapsed">
                     <TextBlock Text="Create and manage desktop or start menu shortcuts." 
-                               FontSize="15" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap"/>
+                               FontSize="15" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap" Margin="0,0,0,20"/>
+                    
+                    <Button Name="BtnCreateMainShortcut" Content="Create Setup Utility Shortcut (.bat)" Height="40" Width="280" Background="#3B82F6" Foreground="White" FontWeight="Bold" FontSize="14" BorderThickness="0" HorizontalAlignment="Left" Padding="10,0">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="6"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
                 </StackPanel>
                 
                 <!-- Welcome/Home Panel -->
@@ -201,6 +209,8 @@ $PanelUserConfigs = $Form.FindName("PanelUserConfigs")
 $PanelAdvancedTools = $Form.FindName("PanelAdvancedTools")
 $PanelShortcutsKreation = $Form.FindName("PanelShortcutsKreation")
 $PanelWelcome = $Form.FindName("PanelWelcome")
+
+$BtnCreateMainShortcut = $Form.FindName("BtnCreateMainShortcut")
 
 $BtnInstallScoop = $Form.FindName("BtnInstallScoop")
 
@@ -744,6 +754,60 @@ $BtnInstallSelected.Add_Click({
 
         $BtnInstallSelected.Content = "Install Selected"
         $BtnInstallSelected.IsEnabled = $true
+    })
+
+$BtnCreateMainShortcut.Add_Click({
+        $BtnCreateMainShortcut.Content = "Creating..."
+        $BtnCreateMainShortcut.IsEnabled = $false
+        [System.Windows.Forms.Application]::DoEvents()
+
+        try {
+            $desktopPath = [Environment]::GetFolderPath("Desktop")
+            $shortcutPath = Join-Path $desktopPath "Windows Setup Utility.bat"
+            
+            $batContent = @"
+@echo off
+:: Batch script to launch Windows Setup Utility
+:: Requests Administrator privileges
+
+net session >nul 2>&1
+if %errorLevel% == 0 (
+    goto :run
+) else (
+    echo Requesting administrative privileges...
+    powershell -Command "Start-Process -FilePath '%~0' -Verb RunAs"
+    exit /b
+)
+
+:run
+powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/kud3n013/setup-script/master/windows/main.ps1 | iex"
+"@
+
+            Set-Content -Path $shortcutPath -Value $batContent -Force
+            
+            Write-Host "Created shortcut at $shortcutPath" -ForegroundColor Green
+            $BtnCreateMainShortcut.Content = "Shortcut Created"
+        } catch {
+            Write-Host "Failed to create shortcut: $_" -ForegroundColor Red
+            $BtnCreateMainShortcut.Content = "Creation Failed"
+        }
+        
+        # We start a runspace to reset the button after some time without blocking the UI thread
+        $Runspace = [runspacefactory]::CreateRunspace()
+        $Runspace.ThreadOptions = "ReuseThread"
+        $Runspace.Open()
+        $PowerShell = [powershell]::Create()
+        $PowerShell.Runspace = $Runspace
+        $PowerShell.AddScript({
+            Start-Sleep -Seconds 2
+            $Form.Dispatcher.Invoke({
+                $BtnCreateMainShortcut.Content = "Create Setup Utility Shortcut (.bat)"
+                $BtnCreateMainShortcut.IsEnabled = $true
+            })
+        }) | Out-Null
+        $PowerShell.Runspace.SessionStateProxy.SetVariable("BtnCreateMainShortcut", $BtnCreateMainShortcut)
+        $PowerShell.Runspace.SessionStateProxy.SetVariable("Form", $Form)
+        $PowerShell.BeginInvoke() | Out-Null
     })
 
 # Display the application frame

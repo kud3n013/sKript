@@ -193,6 +193,14 @@ Add-Type -AssemblyName System.Windows.Forms
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
+
+                    <!-- App Version -->
+                    <TextBlock Text="Version 26.3.31" 
+                               FontSize="12" 
+                               FontWeight="Medium"
+                               Foreground="{DynamicResource TextBody}" 
+                               VerticalAlignment="Bottom" 
+                               HorizontalAlignment="Left" />
                 </Grid>
             </Border>
 

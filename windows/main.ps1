@@ -36,7 +36,7 @@ Add-Type -AssemblyName System.Windows.Forms
             <WrapPanel Margin="15,10,15,10" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Text="Windows Setup Skript" FontWeight="Bold" FontSize="18" Margin="0,0,30,0" Foreground="{DynamicResource TextHeader}" VerticalAlignment="Center"/>
                 
-                <Button Name="NavInstall" Content="Install Software" Height="40" Margin="0,0,5,0" 
+                <Button Name="NavInstall" Content="Install" Height="40" Margin="0,0,5,0" 
                         Background="Transparent" BorderThickness="0" FontSize="14" FontWeight="SemiBold"
                         Padding="20,0" Foreground="{DynamicResource NavBtnFg}">
                     <Button.Resources>
@@ -46,7 +46,7 @@ Add-Type -AssemblyName System.Windows.Forms
                     </Button.Resources>
                 </Button>
                 
-                <Button Name="NavUserConfigs" Content="User Configs" Height="40" Margin="0,0,5,0" 
+                <Button Name="NavUserConfigs" Content="Konfigs" Height="40" Margin="0,0,5,0" 
                         Background="Transparent" BorderThickness="0" FontSize="14" FontWeight="SemiBold"
                         Padding="20,0" Foreground="{DynamicResource NavBtnFg}">
                     <Button.Resources>
@@ -56,7 +56,7 @@ Add-Type -AssemblyName System.Windows.Forms
                     </Button.Resources>
                 </Button>
 
-                <Button Name="NavAdvancedTools" Content="Advanced Tools" Height="40" Margin="0,0,5,0" 
+                <Button Name="NavAdvancedTools" Content="Useful Tools" Height="40" Margin="0,0,5,0" 
                         Background="Transparent" BorderThickness="0" FontSize="14" FontWeight="SemiBold"
                         Padding="20,0" Foreground="{DynamicResource NavBtnFg}">
                     <Button.Resources>
@@ -66,7 +66,7 @@ Add-Type -AssemblyName System.Windows.Forms
                     </Button.Resources>
                 </Button>
 
-                <Button Name="NavShortcutsKreation" Content="Shortcuts Kreation" Height="40" Margin="0,0,5,0" 
+                <Button Name="NavShortcutsKreation" Content="Shortkuts" Height="40" Margin="0,0,5,0" 
                         Background="Transparent" BorderThickness="0" FontSize="14" FontWeight="SemiBold"
                         Padding="20,0" Foreground="{DynamicResource NavBtnFg}">
                     <Button.Resources>
@@ -168,15 +168,28 @@ Add-Type -AssemblyName System.Windows.Forms
                             </WrapPanel>
                         </ScrollViewer>
 
+                        <TextBlock Text="App Selection" FontWeight="SemiBold" FontSize="14" Margin="0,0,0,8" Foreground="{DynamicResource TextLabel}"/>
+                        <Button Name="BtnDeselectAll" Content="Deselect All Apps" Height="35" Background="#FEE2E2" Foreground="#991B1B" BorderThickness="0" FontWeight="SemiBold" Margin="0,0,0,15">
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="4"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+
                         <TextBlock Text="Legend" FontWeight="SemiBold" FontSize="14" Margin="0,0,0,10" Foreground="{DynamicResource TextLabel}"/>
                         <StackPanel Margin="5,0,0,0">
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                                 <TextBlock Text="■" Foreground="#059669" FontWeight="SemiBold" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="Scoop" FontWeight="SemiBold" Foreground="{DynamicResource TextBody}" VerticalAlignment="Center"/>
+                                <TextBlock Text="Official Bucket App" FontWeight="SemiBold" Foreground="{DynamicResource TextBody}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <TextBlock Text="■" Foreground="#2563EB" FontWeight="SemiBold" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Community Bucket App" FontWeight="SemiBold" Foreground="{DynamicResource TextBody}" VerticalAlignment="Center"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="■" Foreground="#2563EB" FontWeight="SemiBold" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="Winget" FontWeight="SemiBold" Foreground="{DynamicResource TextBody}" VerticalAlignment="Center"/>
+                                <TextBlock Text="■" Foreground="#9CA3AF" FontWeight="SemiBold" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Upcoming App" FontWeight="SemiBold" Foreground="{DynamicResource TextBody}" VerticalAlignment="Center"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
@@ -206,13 +219,23 @@ Add-Type -AssemblyName System.Windows.Forms
                             <WrapPanel Name="AppListPanel" Orientation="Horizontal" />
                         </ScrollViewer>
 
-                        <Button Name="BtnInstallSelected" Grid.Row="1" Content="Install Selected" Height="40" Width="180" Background="#10B981" Foreground="White" FontWeight="Bold" FontSize="16" BorderThickness="0" HorizontalAlignment="Right" Padding="20,0">
-                            <Button.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="6"/>
-                                </Style>
-                            </Button.Resources>
-                        </Button>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Name="BtnUninstallSelected" Content="Uninstall Selected" Height="40" Width="180" Background="#EF4444" Foreground="White" FontWeight="Bold" FontSize="16" BorderThickness="0" Margin="0,0,10,0" Padding="20,0">
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="6"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                            
+                            <Button Name="BtnInstallSelected" Content="Install Selected" Height="40" Width="180" Background="#10B981" Foreground="White" FontWeight="Bold" FontSize="16" BorderThickness="0" Padding="20,0">
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="6"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </StackPanel>
                     </Grid>
 
                     <!-- User Configs Panel -->
@@ -228,7 +251,7 @@ Add-Type -AssemblyName System.Windows.Forms
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         
-                        <TextBlock Grid.Row="0" Text="Advanced Configuration and Tools" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10" Foreground="{DynamicResource TextLabel}"/>
+                        <TextBlock Grid.Row="0" Text="Useful Configuration and Tools" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10" Foreground="{DynamicResource TextLabel}"/>
                         
                         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,20">
                             <WrapPanel Name="AdvancedListPanel" Orientation="Horizontal" />
@@ -295,6 +318,8 @@ $BtnInstallScoop = $Form.FindName("BtnInstallScoop")
 $AppListPanel = $Form.FindName("AppListPanel")
 $AdvancedListPanel = $Form.FindName("AdvancedListPanel")
 $BtnInstallSelected = $Form.FindName("BtnInstallSelected")
+$BtnUninstallSelected = $Form.FindName("BtnUninstallSelected")
+$BtnDeselectAll = $Form.FindName("BtnDeselectAll")
 
 # Advanced Config Install Handler
 function global:Invoke-AdvancedInstall {
@@ -521,30 +546,8 @@ try {
                     $groupStack.Children.Add($notice) | Out-Null
 
                     # MAS Activation button
-                    $masBtn = New-Object System.Windows.Controls.Button
-                    $masBtn.Content = "Activate Office (MAS)"
-                    $masBtn.Margin = "0,4,0,4"
-                    $masBtn.Padding = "12,6"
-                    $masBtn.FontSize = 13
-                    $masBtn.FontWeight = "SemiBold"
-                    $masBtn.Background = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#E0E7FF"))
-                    $masBtn.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#4338CA"))
-                    $masBtn.BorderThickness = "0"
-
-                    $masBtn.Add_Click({
-                        $masScript = if ([string]::IsNullOrEmpty($PSScriptRoot)) { $null } else { Join-Path $PSScriptRoot "3rd-party\MAS_AIO.cmd" }
-                        if ($null -ne $masScript -and (Test-Path $masScript)) {
-                            Start-Process "cmd.exe" -ArgumentList "/c `"$masScript`"" -Verb RunAs
-                        } else {
-                            Write-Host "MAS script not found locally. Please use the 'Activate Office (MAS Online)' button instead." -ForegroundColor Yellow
-                        }
-                    })
-
-                    $groupStack.Children.Add($masBtn) | Out-Null
-
-                    # MAS Online Activation button
                     $masOnlineBtn = New-Object System.Windows.Controls.Button
-                    $masOnlineBtn.Content = "Activate Office (MAS Online)"
+                    $masOnlineBtn.Content = "Activate Office (MAS)"
                     $masOnlineBtn.Margin = "0,4,0,4"
                     $masOnlineBtn.Padding = "12,6"
                     $masOnlineBtn.FontSize = 13
@@ -624,7 +627,14 @@ try {
                         $cb.SetResourceReference([System.Windows.Controls.Control]::ForegroundProperty, "TextBody")
                     }
                     elseif ($app.type -eq "scoop") {
-                        $cb.Foreground = "#059669" # Emerald/Green
+                        $bucketName = $app.id.Split("/")[0]
+                        $officialBuckets = @("main", "extras", "versions", "nirsoft", "sysinternals", "php", "nerd-fonts", "nonportable", "java", "games")
+                        
+                        if ($officialBuckets -contains $bucketName) {
+                            $cb.Foreground = "#059669" # Emerald/Green
+                        } else {
+                            $cb.Foreground = "#2563EB" # Blue
+                        }
                     }
                     elseif ($app.type -eq "winget") {
                         $cb.Foreground = "#2563EB" # Blue
@@ -638,7 +648,7 @@ try {
                 }
             }
 
-            if ($category.Name -eq "Advanced Tools") {
+            if ($category.Name -in @("Useful Tools", "Server Tools")) {
                 $AdvancedListPanel.Children.Add($groupStack) | Out-Null
             }
             else {
@@ -770,7 +780,7 @@ function Set-MenuHighlight {
 # Event Handlers for Navigation
 $NavInstall.Add_Click({
         Set-MenuHighlight $NavInstall
-        $MainTitle.Text = "Install Software"
+        $MainTitle.Text = "Install"
         Hide-AllPanels
         $PanelInstall.Visibility = "Visible"
         $SidePanelInstall.Visibility = "Visible"
@@ -778,7 +788,7 @@ $NavInstall.Add_Click({
 
 $NavUserConfigs.Add_Click({
         Set-MenuHighlight $NavUserConfigs
-        $MainTitle.Text = "User Configs"
+        $MainTitle.Text = "Konfigs"
         Hide-AllPanels
         $PanelUserConfigs.Visibility = "Visible"
         $SidePanelDefault.Visibility = "Visible"
@@ -786,7 +796,7 @@ $NavUserConfigs.Add_Click({
 
 $NavAdvancedTools.Add_Click({
         Set-MenuHighlight $NavAdvancedTools
-        $MainTitle.Text = "Advanced Tools"
+        $MainTitle.Text = "Useful Tools"
         Hide-AllPanels
         $PanelAdvancedTools.Visibility = "Visible"
         $SidePanelDefault.Visibility = "Visible"
@@ -794,7 +804,7 @@ $NavAdvancedTools.Add_Click({
 
 $NavShortcutsKreation.Add_Click({
         Set-MenuHighlight $NavShortcutsKreation
-        $MainTitle.Text = "Shortcuts Kreation"
+        $MainTitle.Text = "Shortkuts"
         Hide-AllPanels
         $PanelShortcutsKreation.Visibility = "Visible"
         $SidePanelDefault.Visibility = "Visible"
@@ -818,6 +828,9 @@ $BtnInstallScoop.Add_Click({
                 # Automatically add the icekream bucket during install
                 scoop bucket add kud3n013_icekream https://github.com/kud3n013/icekream | Out-Null
                 
+                scoop install aria2
+                scoop config aria2-warning-enabled false
+                
                 $BtnInstallScoop.Content = "Scoop Installed"
             }
         }
@@ -825,6 +838,52 @@ $BtnInstallScoop.Add_Click({
             $BtnInstallScoop.Content = "Install Failed"
             $BtnInstallScoop.IsEnabled = $true
         }
+    })
+
+$BtnDeselectAll.Add_Click({
+        foreach ($cb in $global:AppCheckboxes) {
+            $cb.IsChecked = $false
+        }
+    })
+
+$BtnUninstallSelected.Add_Click({
+        $BtnUninstallSelected.Content = "Uninstalling..."
+        $BtnUninstallSelected.IsEnabled = $false
+        [System.Windows.Forms.Application]::DoEvents()
+
+        # Gather selected apps
+        $scoopApps = @()
+        $wingetApps = @()
+
+        foreach ($cb in $global:AppCheckboxes) {
+            if ($cb.IsChecked) {
+                $appData = $cb.Tag
+                if ($appData.type -eq "scoop") {
+                    $scoopApps += $appData.id
+                }
+                elseif ($appData.type -eq "winget") {
+                    $wingetApps += $appData.id
+                }
+            }
+        }
+
+        # Uninstall Scoop apps
+        if ($scoopApps.Count -gt 0) {
+            $scoopList = $scoopApps -join " "
+            Write-Host "Uninstalling Scoop apps: $scoopList" -ForegroundColor Yellow
+            Invoke-Expression "scoop uninstall $scoopList"
+        }
+
+        # Uninstall Winget apps
+        if ($wingetApps.Count -gt 0) {
+            foreach ($wa in $wingetApps) {
+                Write-Host "Uninstalling Winget app: $wa" -ForegroundColor Yellow
+                winget uninstall -e --id $wa
+            }
+        }
+
+        $BtnUninstallSelected.Content = "Uninstall Selected"
+        $BtnUninstallSelected.IsEnabled = $true
     })
 
 $BtnInstallSelected.Add_Click({

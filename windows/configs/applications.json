@@ -8,7 +8,7 @@
     {
       "name": "ClassIn",
       "type": "winget",
-      "id": "EEO.ClassIn"
+      "id": ""
     },
     {
       "name": "Discord",
@@ -107,7 +107,7 @@
     {
       "name": "LM Studio",
       "type": "winget",
-      "id": "ElementLabs.LMStudio"
+      "id": ""
     },
     {
       "name": "Ollama",
@@ -162,11 +162,6 @@
       "name": "Antigravity",
       "type": "scoop",
       "id": "extras/antigravity"
-    },
-    {
-      "name": "Aria2",
-      "type": "scoop",
-      "id": "main/aria2"
     },
     {
       "name": "AutoHotkey",
@@ -347,7 +342,7 @@
     {
       "name": "Todoist",
       "type": "winget",
-      "id": "Doist.Todoist"
+      "id": ""
     },
     {
       "name": "WPS Office",
@@ -386,7 +381,7 @@
     {
       "name": "Affinity",
       "type": "winget",
-      "id": "Canva.Affinity"
+      "id": ""
     },
     {
       "name": "Blender",
@@ -396,7 +391,7 @@
     {
       "name": "Canva",
       "type": "winget",
-      "id": "Canva.Canva"
+      "id": ""
     },
     {
       "name": "Inkscape",
@@ -451,11 +446,6 @@
       "name": "OBS Studio",
       "type": "scoop",
       "id": "extras/obs-studio"
-    },
-    {
-      "name": "Screenbox",
-      "type": "winget",
-      "id": "Starpine.Screenbox"
     },
     {
       "name": "Vencord Installer",
@@ -530,7 +520,7 @@
       "id": "extras/vcredist2022"
     }
   ],
-  "Advanced Tools": [
+  "Useful Tools": [
     {
       "name": "Microsoft Office Suite",
       "handler": "odt",
@@ -591,7 +581,9 @@
           "default": true
         }
       ]
-    },
+    }
+  ],
+  "Server Tools": [
     {
       "name": "SearxNG",
       "handler": "searxng"

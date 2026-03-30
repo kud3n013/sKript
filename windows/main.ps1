@@ -6,7 +6,7 @@ Add-Type -AssemblyName System.Windows.Forms
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Windows Desktop Setup" Height="650" Width="1000" 
+        Title="Windows Setup Skript" Height="650" Width="1000" 
         WindowStartupLocation="CenterScreen" Background="{DynamicResource WindowBg}">
     
     <Window.Resources>
@@ -26,19 +26,19 @@ Add-Type -AssemblyName System.Windows.Forms
     </Window.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="220" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <!-- Sidebar Navigation Menu -->
-        <Border Grid.Column="0" Background="{DynamicResource SidebarBg}" BorderBrush="{DynamicResource SidebarBorder}" BorderThickness="0,0,1,0">
-            <StackPanel Margin="15,20,15,20">
-                <TextBlock Text="Navigation" FontWeight="Bold" FontSize="18" Margin="0,0,0,20" Foreground="{DynamicResource TextHeader}" />
+        <!-- Top Navigation Menu -->
+        <Border Grid.Row="0" Background="{DynamicResource SidebarBg}" BorderBrush="{DynamicResource SidebarBorder}" BorderThickness="0,0,0,1">
+            <WrapPanel Margin="15,10,15,10" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Windows Setup Skript" FontWeight="Bold" FontSize="18" Margin="0,0,30,0" Foreground="{DynamicResource TextHeader}" VerticalAlignment="Center"/>
                 
-                <Button Name="NavInstall" Content="Install Software" Height="40" Margin="0,5,0,5" 
+                <Button Name="NavInstall" Content="Install Software" Height="40" Margin="0,0,5,0" 
                         Background="Transparent" BorderThickness="0" FontSize="14" FontWeight="SemiBold"
-                        HorizontalContentAlignment="Left" Padding="15,0" Foreground="{DynamicResource NavBtnFg}">
+                        Padding="20,0" Foreground="{DynamicResource NavBtnFg}">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="6"/>
@@ -46,9 +46,9 @@ Add-Type -AssemblyName System.Windows.Forms
                     </Button.Resources>
                 </Button>
                 
-                <Button Name="NavUserConfigs" Content="User Configs" Height="40" Margin="0,5,0,5" 
+                <Button Name="NavUserConfigs" Content="User Configs" Height="40" Margin="0,0,5,0" 
                         Background="Transparent" BorderThickness="0" FontSize="14" FontWeight="SemiBold"
-                        HorizontalContentAlignment="Left" Padding="15,0" Foreground="{DynamicResource NavBtnFg}">
+                        Padding="20,0" Foreground="{DynamicResource NavBtnFg}">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="6"/>
@@ -56,9 +56,9 @@ Add-Type -AssemblyName System.Windows.Forms
                     </Button.Resources>
                 </Button>
 
-                <Button Name="NavAdvancedTools" Content="Advanced Tools" Height="40" Margin="0,5,0,5" 
+                <Button Name="NavAdvancedTools" Content="Advanced Tools" Height="40" Margin="0,0,5,0" 
                         Background="Transparent" BorderThickness="0" FontSize="14" FontWeight="SemiBold"
-                        HorizontalContentAlignment="Left" Padding="15,0" Foreground="{DynamicResource NavBtnFg}">
+                        Padding="20,0" Foreground="{DynamicResource NavBtnFg}">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="6"/>
@@ -66,9 +66,9 @@ Add-Type -AssemblyName System.Windows.Forms
                     </Button.Resources>
                 </Button>
 
-                <Button Name="NavShortcutsKreation" Content="Shortcuts Kreation" Height="40" Margin="0,5,0,5" 
+                <Button Name="NavShortcutsKreation" Content="Shortcuts Kreation" Height="40" Margin="0,0,5,0" 
                         Background="Transparent" BorderThickness="0" FontSize="14" FontWeight="SemiBold"
-                        HorizontalContentAlignment="Left" Padding="15,0" Foreground="{DynamicResource NavBtnFg}">
+                        Padding="20,0" Foreground="{DynamicResource NavBtnFg}">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="6"/>
@@ -76,111 +76,187 @@ Add-Type -AssemblyName System.Windows.Forms
                     </Button.Resources>
                 </Button>
 
-                <Separator Margin="0,15,0,15" Background="{DynamicResource SeparatorBg}" />
+                <Border Width="1" Height="24" Margin="10,0,10,0" Background="{DynamicResource SeparatorBg}" />
 
-                <Button Name="BtnToggleTheme" Content="🌓 Toggle Theme" Height="40" Margin="0,5,0,5" 
+                <Button Name="BtnToggleTheme" Content="🌓 Theme" Height="40" Margin="0,0,5,0" 
                         Background="Transparent" BorderThickness="0" FontSize="14" FontWeight="SemiBold"
-                        HorizontalContentAlignment="Left" Padding="15,0" Foreground="{DynamicResource NavBtnFg}">
+                        Padding="15,0" Foreground="{DynamicResource NavBtnFg}">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="6"/>
                         </Style>
                     </Button.Resources>
                 </Button>
-
-            </StackPanel>
+            </WrapPanel>
         </Border>
 
-        <!-- Main Content Area Dashboard -->
-        <Border Grid.Column="1" Background="{DynamicResource PanelBg}" Padding="30">
-            <Grid Name="ContentArea">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                
-                <TextBlock Name="MainTitle" Grid.Row="0" Text="Welcome" FontSize="28" FontWeight="Bold" Margin="0,0,0,10" Foreground="{DynamicResource TextHeader}"/>
-                <Separator Grid.Row="1" Margin="0,0,0,20" Background="{DynamicResource SeparatorBg}" />
-                
-                <!-- Install Panel -->
-                <Grid Name="PanelInstall" Grid.Row="2" Visibility="Collapsed">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    
-                    <TextBlock Grid.Row="0" Text="Package Manager Configuration" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10" Foreground="{DynamicResource TextLabel}"/>
-                    
-                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,20" VerticalAlignment="Center">
-                        <Button Name="BtnInstallScoop" Content="Install Scoop" Padding="15,5" Background="#E0E7FF" Foreground="#4338CA" BorderThickness="0" FontWeight="SemiBold" Margin="0,0,20,0">
+        <!-- Content Area which contains Context Side Panel + Main Container -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Dynamic Side Panel -->
+            <Border Grid.Column="0" Background="{DynamicResource SidebarBg}" BorderBrush="{DynamicResource SidebarBorder}" BorderThickness="0,0,1,0">
+                <Grid Margin="15,20,15,20">
+                    <!-- Default Side Panel Placeholder -->
+                    <StackPanel Name="SidePanelDefault" Visibility="Visible">
+                        <TextBlock Text="Options" FontWeight="Bold" FontSize="18" Margin="0,0,0,20" Foreground="{DynamicResource TextHeader}" />
+                        <TextBlock Text="Reserved for current and future tab-specific options." FontSize="14" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <!-- Install Software Side Panel -->
+                    <StackPanel Name="SidePanelInstall" Visibility="Collapsed">
+                        <TextBlock Text="Configuration" FontWeight="Bold" FontSize="18" Margin="0,0,0,15" Foreground="{DynamicResource TextHeader}" />
+                        
+                        <TextBlock Text="Package Manager" FontWeight="SemiBold" FontSize="14" Margin="0,0,0,8" Foreground="{DynamicResource TextLabel}"/>
+                        <Button Name="BtnInstallScoop" Content="Install Scoop" Height="35" Background="#E0E7FF" Foreground="#4338CA" BorderThickness="0" FontWeight="SemiBold" Margin="0,0,0,15">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="4"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <TextBlock Text="Legend:" FontWeight="SemiBold" Foreground="{DynamicResource TextLabel}" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                        <TextBlock Text="■ Scoop" Foreground="#059669" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                        <TextBlock Text="■ Winget" Foreground="#2563EB" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        
+                        <TextBlock Text="Scoop Buckets" FontWeight="SemiBold" FontSize="14" Margin="0,0,0,8" Foreground="{DynamicResource TextLabel}"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="250" Margin="0,0,0,15">
+                            <WrapPanel Name="BucketListPanel" Orientation="Horizontal" Margin="0">
+                                <WrapPanel.Resources>
+                                    <Style TargetType="{x:Type ToggleButton}">
+                                        <Setter Property="Margin" Value="0,0,6,8"/>
+                                        <Setter Property="Padding" Value="8,4"/>
+                                        <Setter Property="FontSize" Value="12"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Setter Property="Background" Value="#E5E7EB"/>
+                                        <Setter Property="Foreground" Value="#374151"/>
+                                        <Setter Property="IsChecked" Value="True"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                                    <Border CornerRadius="4" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsChecked" Value="True">
+                                                            <Setter Property="Background" Value="#D1FAE5" />
+                                                            <Setter Property="Foreground" Value="#065F46" />
+                                                        </Trigger>
+                                                        <Trigger Property="IsChecked" Value="False">
+                                                            <Setter Property="Background" Value="#FEE2E2" />
+                                                            <Setter Property="Foreground" Value="#991B1B" />
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </WrapPanel.Resources>
+                                <ToggleButton Name="BucketMain" Content="main" Uid="main" Tag="main" />
+                                <ToggleButton Name="BucketExtras" Content="extras" Uid="extras" Tag="extras" />
+                                <ToggleButton Name="BucketVersions" Content="versions" Uid="versions" Tag="versions" />
+                                <ToggleButton Name="BucketNirsoft" Content="nirsoft" Uid="nirsoft" Tag="nirsoft" />
+                                <ToggleButton Name="BucketSysinternals" Content="sysinternals" Uid="sysinternals" Tag="sysinternals" />
+                                <ToggleButton Name="BucketPhp" Content="php" Uid="php" Tag="php" />
+                                <ToggleButton Name="BucketNerdfonts" Content="nerd-fonts" Uid="nerd-fonts" Tag="nerd-fonts" />
+                                <ToggleButton Name="BucketNonportable" Content="nonportable" Uid="nonportable" Tag="nonportable" />
+                                <ToggleButton Name="BucketJava" Content="java" Uid="java" Tag="java" />
+                                <ToggleButton Name="BucketGames" Content="games" Uid="games" Tag="games" />
+                                <ToggleButton Name="BucketScoopMaster" Content="ScoopMaster" Uid="ScoopMaster" Tag="okibcn_ScoopMaster|https://github.com/okibcn/ScoopMaster" IsChecked="False" />
+                                <ToggleButton Name="BucketDEVtools" Content="DEV-tools" Uid="DEV-tools" Tag="anderlli0053_DEV-tools|https://github.com/anderlli0053/DEV-tools" IsChecked="False" />
+                            </WrapPanel>
+                        </ScrollViewer>
+
+                        <TextBlock Text="Legend" FontWeight="SemiBold" FontSize="14" Margin="0,0,0,10" Foreground="{DynamicResource TextLabel}"/>
+                        <StackPanel Margin="5,0,0,0">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <TextBlock Text="■" Foreground="#059669" FontWeight="SemiBold" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Scoop" FontWeight="SemiBold" Foreground="{DynamicResource TextBody}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="■" Foreground="#2563EB" FontWeight="SemiBold" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Winget" FontWeight="SemiBold" Foreground="{DynamicResource TextBody}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </StackPanel>
                     </StackPanel>
-                    
-                    <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Margin="0,0,0,20">
-                        <WrapPanel Name="AppListPanel" Orientation="Horizontal" />
-                    </ScrollViewer>
-
-                    <Button Name="BtnInstallSelected" Grid.Row="3" Content="Install Selected" Height="40" Width="180" Background="#10B981" Foreground="White" FontWeight="Bold" FontSize="16" BorderThickness="0" HorizontalAlignment="Right" Padding="20,0">
-                        <Button.Resources>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="CornerRadius" Value="6"/>
-                            </Style>
-                        </Button.Resources>
-                    </Button>
                 </Grid>
+            </Border>
 
-                <!-- User Configs Panel -->
-                <StackPanel Name="PanelUserConfigs" Grid.Row="2" Visibility="Collapsed">
-                    <TextBlock Text="Import and Export User Configurations." 
-                               FontSize="15" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap"/>
-                </StackPanel>
-
-                <!-- Advanced Tools Panel -->
-                <Grid Name="PanelAdvancedTools" Grid.Row="2" Visibility="Collapsed">
+            <!-- Main Content Area Dashboard -->
+            <Border Grid.Column="1" Background="{DynamicResource PanelBg}" Padding="30">
+                <Grid Name="ContentArea">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     
-                    <TextBlock Grid.Row="0" Text="Advanced Configuration and Tools" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10" Foreground="{DynamicResource TextLabel}"/>
+                    <TextBlock Name="MainTitle" Grid.Row="0" Text="Welcome" FontSize="28" FontWeight="Bold" Margin="0,0,0,10" Foreground="{DynamicResource TextHeader}"/>
+                    <Separator Grid.Row="1" Margin="0,0,0,20" Background="{DynamicResource SeparatorBg}" />
                     
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,20">
-                        <WrapPanel Name="AdvancedListPanel" Orientation="Horizontal" />
-                    </ScrollViewer>
+                    <!-- Install Panel -->
+                    <Grid Name="PanelInstall" Grid.Row="2" Visibility="Collapsed">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Margin="0,0,0,20">
+                            <WrapPanel Name="AppListPanel" Orientation="Horizontal" />
+                        </ScrollViewer>
+
+                        <Button Name="BtnInstallSelected" Grid.Row="1" Content="Install Selected" Height="40" Width="180" Background="#10B981" Foreground="White" FontWeight="Bold" FontSize="16" BorderThickness="0" HorizontalAlignment="Right" Padding="20,0">
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="6"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </Grid>
+
+                    <!-- User Configs Panel -->
+                    <StackPanel Name="PanelUserConfigs" Grid.Row="2" Visibility="Collapsed">
+                        <TextBlock Text="Import and Export User Configurations." 
+                                   FontSize="15" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap"/>
+                    </StackPanel>
+
+                    <!-- Advanced Tools Panel -->
+                    <Grid Name="PanelAdvancedTools" Grid.Row="2" Visibility="Collapsed">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Grid.Row="0" Text="Advanced Configuration and Tools" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10" Foreground="{DynamicResource TextLabel}"/>
+                        
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,20">
+                            <WrapPanel Name="AdvancedListPanel" Orientation="Horizontal" />
+                        </ScrollViewer>
+                    </Grid>
+                    
+                    <!-- Shortcuts Kreation Panel -->
+                    <StackPanel Name="PanelShortcutsKreation" Grid.Row="2" Visibility="Collapsed">
+                        <TextBlock Text="Create and manage desktop or start menu shortcuts." 
+                                   FontSize="15" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap" Margin="0,0,0,20"/>
+                        
+                        <Button Name="BtnCreateMainShortcut" Content="Create Setup Utility Shortcut (.lnk)" Height="40" Width="280" Background="#3B82F6" Foreground="White" FontWeight="Bold" FontSize="14" BorderThickness="0" HorizontalAlignment="Left" Padding="10,0">
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="6"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </StackPanel>
+                    
+                    <!-- Welcome/Home Panel -->
+                    <StackPanel Name="PanelWelcome" Grid.Row="2" Visibility="Visible">
+                        <TextBlock Text="Select an option from the top navigation menu to begin customizing your Windows installation." 
+                                   FontSize="15" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap"/>
+                    </StackPanel>
                 </Grid>
-                
-                <!-- Shortcuts Kreation Panel -->
-                <StackPanel Name="PanelShortcutsKreation" Grid.Row="2" Visibility="Collapsed">
-                    <TextBlock Text="Create and manage desktop or start menu shortcuts." 
-                               FontSize="15" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap" Margin="0,0,0,20"/>
-                    
-                    <Button Name="BtnCreateMainShortcut" Content="Create Setup Utility Shortcut (.bat)" Height="40" Width="280" Background="#3B82F6" Foreground="White" FontWeight="Bold" FontSize="14" BorderThickness="0" HorizontalAlignment="Left" Padding="10,0">
-                        <Button.Resources>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="CornerRadius" Value="6"/>
-                            </Style>
-                        </Button.Resources>
-                    </Button>
-                </StackPanel>
-                
-                <!-- Welcome/Home Panel -->
-                <StackPanel Name="PanelWelcome" Grid.Row="2" Visibility="Visible">
-                    <TextBlock Text="Select an option from the sidebar to begin customizing your Windows installation." 
-                               FontSize="15" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap"/>
-                </StackPanel>
-            </Grid>
-        </Border>
+            </Border>
+        </Grid>
     </Grid>
 </Window>
 "@
@@ -209,6 +285,8 @@ $PanelUserConfigs = $Form.FindName("PanelUserConfigs")
 $PanelAdvancedTools = $Form.FindName("PanelAdvancedTools")
 $PanelShortcutsKreation = $Form.FindName("PanelShortcutsKreation")
 $PanelWelcome = $Form.FindName("PanelWelcome")
+$SidePanelDefault = $Form.FindName("SidePanelDefault")
+$SidePanelInstall = $Form.FindName("SidePanelInstall")
 
 $BtnCreateMainShortcut = $Form.FindName("BtnCreateMainShortcut")
 
@@ -568,6 +646,51 @@ try {
         Write-Host $_.Exception.Message -ForegroundColor Red
     }
 
+# Bind Bucket List Handlers
+$BucketListPanel = $Form.FindName("BucketListPanel")
+if ($null -ne $BucketListPanel) {
+    foreach ($tb in $BucketListPanel.Children) {
+        if ($tb -is [System.Windows.Controls.Primitives.ToggleButton]) {
+            $tb.Add_Checked({
+                param($s, $e)
+                $tagStr = $s.Tag -as [string]
+                $s.Content = "..."
+                $s.IsEnabled = $false
+                [System.Windows.Forms.Application]::DoEvents()
+                
+                try {
+                    $parts = $tagStr.Split("|")
+                    if ($parts.Count -eq 2) {
+                        scoop bucket add $parts[0] $parts[1] | Out-Null
+                    } else {
+                        scoop bucket add $tagStr | Out-Null
+                    }
+                } catch {}
+                
+                $s.Content = $s.Uid
+                $s.IsEnabled = $true
+            })
+            
+            $tb.Add_Unchecked({
+                param($s, $e)
+                $tagStr = $s.Tag -as [string]
+                $s.Content = "..."
+                $s.IsEnabled = $false
+                [System.Windows.Forms.Application]::DoEvents()
+                
+                try {
+                    $parts = $tagStr.Split("|")
+                    $aliasName = $parts[0]
+                    scoop bucket rm $aliasName | Out-Null
+                } catch {}
+                
+                $s.Content = $s.Uid
+                $s.IsEnabled = $true
+            })
+        }
+    }
+}
+
 # Theming Logic
 $global:IsDarkMode = $false
 
@@ -625,6 +748,8 @@ function Hide-AllPanels {
     $PanelAdvancedTools.Visibility = "Collapsed"
     $PanelShortcutsKreation.Visibility = "Collapsed"
     $PanelWelcome.Visibility = "Collapsed"
+    $SidePanelDefault.Visibility = "Collapsed"
+    $SidePanelInstall.Visibility = "Collapsed"
 }
 
 # Highlight Selected Menu Helper Function
@@ -643,6 +768,7 @@ $NavInstall.Add_Click({
         $MainTitle.Text = "Install Software"
         Hide-AllPanels
         $PanelInstall.Visibility = "Visible"
+        $SidePanelInstall.Visibility = "Visible"
     })
 
 $NavUserConfigs.Add_Click({
@@ -650,6 +776,7 @@ $NavUserConfigs.Add_Click({
         $MainTitle.Text = "User Configs"
         Hide-AllPanels
         $PanelUserConfigs.Visibility = "Visible"
+        $SidePanelDefault.Visibility = "Visible"
     })
 
 $NavAdvancedTools.Add_Click({
@@ -657,6 +784,7 @@ $NavAdvancedTools.Add_Click({
         $MainTitle.Text = "Advanced Tools"
         Hide-AllPanels
         $PanelAdvancedTools.Visibility = "Visible"
+        $SidePanelDefault.Visibility = "Visible"
     })
 
 $NavShortcutsKreation.Add_Click({
@@ -664,6 +792,7 @@ $NavShortcutsKreation.Add_Click({
         $MainTitle.Text = "Shortcuts Kreation"
         Hide-AllPanels
         $PanelShortcutsKreation.Visibility = "Visible"
+        $SidePanelDefault.Visibility = "Visible"
     })
 
 $BtnInstallScoop.Add_Click({
@@ -693,18 +822,6 @@ $BtnInstallSelected.Add_Click({
         $BtnInstallSelected.Content = "Installing..."
         $BtnInstallSelected.IsEnabled = $false
         [System.Windows.Forms.Application]::DoEvents()
-
-        # Define required buckets
-        $buckets = @("extras", "nonportable", "games", "main", "versions", "nerd-fonts", "nirsoft")
-
-        # Add Scoop buckets (Silently continues if already exists)
-        foreach ($b in $buckets) {
-            Write-Host "Verifying bucket: $b"
-            try {
-                scoop bucket add $b | Out-Null
-            }
-            catch { }
-        }
 
         # Gather selected apps
         $scoopApps = @()
@@ -763,27 +880,24 @@ $BtnCreateMainShortcut.Add_Click({
 
         try {
             $desktopPath = [Environment]::GetFolderPath("Desktop")
-            $shortcutPath = Join-Path $desktopPath "Windows Setup Utility.bat"
+            $shortcutPath = Join-Path $desktopPath "Windows Setup Utility.lnk"
             
-            $batContent = @"
-@echo off
-:: Batch script to launch Windows Setup Utility
-:: Requests Administrator privileges
-
-net session >nul 2>&1
-if %errorLevel% == 0 (
-    goto :run
-) else (
-    echo Requesting administrative privileges...
-    powershell -Command "Start-Process -FilePath '%~0' -Verb RunAs"
-    exit /b
-)
-
-:run
-powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/kud3n013/setup-script/master/windows/main.ps1 | iex"
+            # Create a launcher script in LocalAppData to avoid Defender heuristics on LNK shortcut arguments
+            $appDataPath = Join-Path $env:LOCALAPPDATA "WindowsSetupUtility"
+            if (-not (Test-Path $appDataPath)) { New-Item -ItemType Directory -Path $appDataPath -Force | Out-Null }
+            $launcherPath = Join-Path $appDataPath "launcher.ps1"
+            
+            $launcherContent = @"
+Start-Process powershell.exe -ArgumentList '-NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/kud3n013/setup-script/master/windows/main.ps1 | iex`"' -Verb RunAs
 "@
+            Set-Content -Path $launcherPath -Value $launcherContent -Force
 
-            Set-Content -Path $shortcutPath -Value $batContent -Force
+            $WshShell = New-Object -ComObject WScript.Shell
+            $Shortcut = $WshShell.CreateShortcut($shortcutPath)
+            $Shortcut.TargetPath = "powershell.exe"
+            $Shortcut.Arguments = "-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$launcherPath`""
+            $Shortcut.IconLocation = "powershell.exe,0"
+            $Shortcut.Save()
             
             Write-Host "Created shortcut at $shortcutPath" -ForegroundColor Green
             $BtnCreateMainShortcut.Content = "Shortcut Created"
@@ -801,7 +915,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubus
         $PowerShell.AddScript({
             Start-Sleep -Seconds 2
             $Form.Dispatcher.Invoke({
-                $BtnCreateMainShortcut.Content = "Create Setup Utility Shortcut (.bat)"
+                $BtnCreateMainShortcut.Content = "Create Setup Utility Shortcut (.lnk)"
                 $BtnCreateMainShortcut.IsEnabled = $true
             })
         }) | Out-Null

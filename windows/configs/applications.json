@@ -1,133 +1,600 @@
 {
   "Communication": [
-    { "name": "Beeper", "type": "scoop", "id": "extras/beeper" },
-    { "name": "ClassIn", "type": "winget", "id": "EEO.ClassIn" },
-    { "name": "Discord", "type": "scoop", "id": "extras/discord" },
-    { "name": "Signal", "type": "scoop", "id": "extras/signal" },
-    { "name": "TeamSpeak 3", "type": "scoop", "id": "extras/teamspeak3" },
-    { "name": "Telegram", "type": "scoop", "id": "extras/telegram" },
-    { "name": "Thunderbird", "type": "scoop", "id": "extras/thunderbird" },
-    { "name": "Zalo", "type": "winget", "id": "VNGCorp.Zalo" },
-    { "name": "Zoom", "type": "scoop", "id": "extras/zoom" }
+    {
+      "name": "Beeper",
+      "type": "scoop",
+      "id": "extras/beeper"
+    },
+    {
+      "name": "ClassIn",
+      "type": "winget",
+      "id": "EEO.ClassIn"
+    },
+    {
+      "name": "Discord",
+      "type": "scoop",
+      "id": "extras/discord"
+    },
+    {
+      "name": "Signal",
+      "type": "scoop",
+      "id": "extras/signal"
+    },
+    {
+      "name": "TeamSpeak 3",
+      "type": "scoop",
+      "id": "extras/teamspeak3"
+    },
+    {
+      "name": "Telegram",
+      "type": "scoop",
+      "id": "extras/telegram"
+    },
+    {
+      "name": "Thunderbird",
+      "type": "scoop",
+      "id": "extras/thunderbird"
+    },
+    {
+      "name": "Zalo",
+      "type": "winget",
+      "id": "VNGCorp.Zalo"
+    },
+    {
+      "name": "Zoom",
+      "type": "scoop",
+      "id": "extras/zoom"
+    }
   ],
   "Development": [
-    { "name": "Docker", "type": "scoop", "id": "main/docker" },
-    { "name": "Git", "type": "scoop", "id": "main/git" },
-    { "name": "Neovim", "type": "scoop", "id": "main/neovim" },
-    { "name": "Node.js", "type": "scoop", "id": "main/nodejs" },
-    { "name": "PowerShell 7", "type": "scoop", "id": "main/pwsh" },
-    { "name": "Python", "type": "scoop", "id": "main/python" },
-    { "name": "Rust", "type": "scoop", "id": "main/rust" },
-    { "name": "VSCodium", "type": "scoop", "id": "extras/vscodium" },
-    { "name": "Windows Terminal", "type": "scoop", "id": "extras/windows-terminal" }
+    {
+      "name": "Docker",
+      "type": "scoop",
+      "id": "main/docker"
+    },
+    {
+      "name": "Git",
+      "type": "scoop",
+      "id": "main/git"
+    },
+    {
+      "name": "Neovim",
+      "type": "scoop",
+      "id": "main/neovim"
+    },
+    {
+      "name": "Node.js",
+      "type": "scoop",
+      "id": "main/nodejs"
+    },
+    {
+      "name": "PowerShell 7",
+      "type": "scoop",
+      "id": "main/pwsh"
+    },
+    {
+      "name": "Python",
+      "type": "scoop",
+      "id": "main/python"
+    },
+    {
+      "name": "Rust",
+      "type": "scoop",
+      "id": "main/rust"
+    },
+    {
+      "name": "VSCodium",
+      "type": "scoop",
+      "id": "extras/vscodium"
+    },
+    {
+      "name": "Windows Terminal",
+      "type": "scoop",
+      "id": "extras/windows-terminal"
+    }
   ],
   "AI": [
-    { "name": "ChatGPT", "type": "scoop", "id": "extras/chatgpt" },
-    { "name": "Claude", "type": "scoop", "id": "extras/claude" },
-    { "name": "LM Studio", "type": "winget", "id": "ElementLabs.LMStudio" },
-    { "name": "Ollama", "type": "scoop", "id": "extras/ollama-full" }
+    {
+      "name": "ChatGPT",
+      "type": "scoop",
+      "id": "extras/chatgpt"
+    },
+    {
+      "name": "Claude",
+      "type": "scoop",
+      "id": "extras/claude"
+    },
+    {
+      "name": "LM Studio",
+      "type": "winget",
+      "id": "ElementLabs.LMStudio"
+    },
+    {
+      "name": "Ollama",
+      "type": "scoop",
+      "id": "extras/ollama-full"
+    }
   ],
   "Proton Suite": [
-    { "name": "Proton Authenticator", "type": "scoop", "id": "extras/proton-authenticator" },
-    { "name": "Proton Drive", "type": "scoop", "id": "extras/proton-drive" },
-    { "name": "Proton Mail", "type": "scoop", "id": "extras/proton-mail" },
-    { "name": "Proton Mail Bridge", "type": "scoop", "id": "extras/protonmail-bridge" },
-    { "name": "Proton Mail Export", "type": "scoop", "id": "extras/proton-mail-export" },
-    { "name": "Proton Pass", "type": "scoop", "id": "extras/proton-pass" },
-    { "name": "Proton VPN", "type": "scoop", "id": "nonportable/protonvpn-np" }
+    {
+      "name": "Proton Authenticator",
+      "type": "scoop",
+      "id": "extras/proton-authenticator"
+    },
+    {
+      "name": "Proton Drive",
+      "type": "scoop",
+      "id": "extras/proton-drive"
+    },
+    {
+      "name": "Proton Mail",
+      "type": "scoop",
+      "id": "extras/proton-mail"
+    },
+    {
+      "name": "Proton Mail Bridge",
+      "type": "scoop",
+      "id": "extras/protonmail-bridge"
+    },
+    {
+      "name": "Proton Mail Export",
+      "type": "scoop",
+      "id": "extras/proton-mail-export"
+    },
+    {
+      "name": "Proton Pass",
+      "type": "scoop",
+      "id": "extras/proton-pass"
+    },
+    {
+      "name": "Proton VPN",
+      "type": "scoop",
+      "id": "nonportable/protonvpn-np"
+    }
   ],
   "Utilities": [
-    { "name": "ActivityWatch", "type": "scoop", "id": "extras/activitywatch" },
-    { "name": "Antigravity", "type": "scoop", "id": "extras/antigravity" },
-    { "name": "Aria2", "type": "scoop", "id": "main/aria2" },
-    { "name": "AutoHotkey", "type": "scoop", "id": "extras/autohotkey" },
-    { "name": "File Converter", "type": "scoop", "id": "nonportable/file-converter-np" },
-    { "name": "FilePilot", "type": "winget", "id": "Voidstar.FilePilot" },
-    { "name": "Flow Launcher", "type": "scoop", "id": "extras/flow-launcher" },
-    { "name": "Free Download Manager", "type": "scoop", "id": "extras/freedownloadmanager" },
-    { "name": "PowerToys", "type": "scoop", "id": "extras/powertoys" },
-    { "name": "Revo Uninstaller", "type": "scoop", "id": "extras/revouninstaller" },
-    { "name": "UniKey", "type": "winget", "id": "UniKey.UniKey" },
-    { "name": "Wacom Tablet Driver", "type": "winget", "id": "Wacom.WacomTabletDriver" },
-    { "name": "Winget", "type": "scoop", "id": "main/winget" },
-    { "name": "WinLister", "type": "scoop", "id": "nirsoft/winlister" },
-    { "name": "WinRAR", "type": "scoop", "id": "extras/winrar" }
+    {
+      "name": "ActivityWatch",
+      "type": "scoop",
+      "id": "extras/activitywatch"
+    },
+    {
+      "name": "Antigravity",
+      "type": "scoop",
+      "id": "extras/antigravity"
+    },
+    {
+      "name": "Aria2",
+      "type": "scoop",
+      "id": "main/aria2"
+    },
+    {
+      "name": "AutoHotkey",
+      "type": "scoop",
+      "id": "extras/autohotkey"
+    },
+    {
+      "name": "File Converter",
+      "type": "scoop",
+      "id": "nonportable/file-converter-np"
+    },
+    {
+      "name": "FilePilot",
+      "type": "scoop",
+      "id": "anderlli0053_DEV-tools/filepilot"
+    },
+    {
+      "name": "Flow Launcher",
+      "type": "scoop",
+      "id": "extras/flow-launcher"
+    },
+    {
+      "name": "Free Download Manager",
+      "type": "scoop",
+      "id": "extras/freedownloadmanager"
+    },
+    {
+      "name": "Microsoft Activation Scripts",
+      "type": "scoop",
+      "id": "okibcn_ScoopMaster/mas"
+    },
+    {
+      "name": "Office Tool Plus",
+      "type": "scoop",
+      "id": "extras/office-tool-plus"
+    },
+    {
+      "name": "PowerToys",
+      "type": "scoop",
+      "id": "extras/powertoys"
+    },
+    {
+      "name": "Revo Uninstaller",
+      "type": "scoop",
+      "id": "extras/revouninstaller"
+    },
+    {
+      "name": "UniKey",
+      "type": "winget",
+      "id": "UniKey.UniKey"
+    },
+    {
+      "name": "Wacom Tablet Driver",
+      "type": "scoop",
+      "id": "okibcn_ScoopMaster/WacomTablet-Install"
+    },
+    {
+      "name": "Winget",
+      "type": "scoop",
+      "id": "main/winget"
+    },
+    {
+      "name": "WinLister",
+      "type": "scoop",
+      "id": "nirsoft/winlister"
+    },
+    {
+      "name": "WinRAR",
+      "type": "scoop",
+      "id": "extras/winrar"
+    },
+    {
+      "name": "Winutil",
+      "type": "scoop",
+      "id": "extras/winutil"
+    }
   ],
-  "🍚Ricing": [
-    { "name": "Fastfetch", "type": "scoop", "id": "main/fastfetch" },
-    { "name": "GlazeWM", "type": "scoop", "id": "extras/glazewm" },
-    { "name": "Komorebi", "type": "scoop", "id": "extras/komorebi" },
-    { "name": "Mica For Everyone", "type": "scoop", "id": "extras/micaforeveryone" },
-    { "name": "Windhawk", "type": "scoop", "id": "extras/windhawk" },
-    { "name": "Winfetch", "type": "scoop", "id": "main/winfetch" },
-    { "name": "Yasb", "type": "scoop", "id": "extras/yasb" },
-    { "name": "Zebar", "type": "scoop", "id": "extras/zebar" }
+  "Ricing": [
+    {
+      "name": "Fastfetch",
+      "type": "scoop",
+      "id": "main/fastfetch"
+    },
+    {
+      "name": "GlazeWM",
+      "type": "scoop",
+      "id": "extras/glazewm"
+    },
+    {
+      "name": "Komorebi",
+      "type": "scoop",
+      "id": "extras/komorebi"
+    },
+    {
+      "name": "Mica For Everyone",
+      "type": "scoop",
+      "id": "extras/micaforeveryone"
+    },
+    {
+      "name": "Windhawk",
+      "type": "scoop",
+      "id": "extras/windhawk"
+    },
+    {
+      "name": "Winfetch",
+      "type": "scoop",
+      "id": "main/winfetch"
+    },
+    {
+      "name": "Yasb",
+      "type": "scoop",
+      "id": "extras/yasb"
+    },
+    {
+      "name": "Zebar",
+      "type": "scoop",
+      "id": "extras/zebar"
+    }
   ],
   "Browsers": [
-    { "name": "Brave", "type": "scoop", "id": "extras/brave" },
-    { "name": "Cốc Cốc", "type": "winget", "id": "CocCoc.CocCoc" },
-    { "name": "Firefox", "type": "scoop", "id": "extras/firefox" },
-    { "name": "Google Chrome", "type": "scoop", "id": "extras/googlechrome" },
-    { "name": "Ungoogled Chromium", "type": "scoop", "id": "extras/ungoogled-chromium" },
-    { "name": "Vivaldi", "type": "scoop", "id": "extras/vivaldi" },
-    { "name": "Zen Browser", "type": "scoop", "id": "extras/zen-browser" }
+    {
+      "name": "Brave",
+      "type": "scoop",
+      "id": "extras/brave"
+    },
+    {
+      "name": "Cốc Cốc",
+      "type": "winget",
+      "id": "CocCoc.CocCoc"
+    },
+    {
+      "name": "Firefox",
+      "type": "scoop",
+      "id": "extras/firefox"
+    },
+    {
+      "name": "Google Chrome",
+      "type": "scoop",
+      "id": "extras/googlechrome"
+    },
+    {
+      "name": "Ungoogled Chromium",
+      "type": "scoop",
+      "id": "extras/ungoogled-chromium"
+    },
+    {
+      "name": "Vivaldi",
+      "type": "scoop",
+      "id": "extras/vivaldi"
+    },
+    {
+      "name": "Zen Browser",
+      "type": "scoop",
+      "id": "extras/zen-browser"
+    }
   ],
   "Productivity": [
-    { "name": "Obsidian", "type": "scoop", "id": "extras/obsidian" },
-    { "name": "Standard Notes", "type": "scoop", "id": "extras/standardnotes" },
-    { "name": "Todoist", "type": "winget", "id": "Doist.Todoist" },
-    { "name": "Zotero", "type": "scoop", "id": "extras/zotero" }
+    {
+      "name": "LibreOffice",
+      "type": "scoop",
+      "id": "extras/libreoffice"
+    },
+    {
+      "name": "Obsidian",
+      "type": "scoop",
+      "id": "extras/obsidian"
+    },
+    {
+      "name": "Office 365 Apps",
+      "type": "scoop",
+      "id": "nonportable/office-365-apps-np"
+    },
+    {
+      "name": "OpenOffice",
+      "type": "scoop",
+      "id": "extras/openoffice"
+    },
+    {
+      "name": "Standard Notes",
+      "type": "scoop",
+      "id": "extras/standardnotes"
+    },
+    {
+      "name": "Todoist",
+      "type": "winget",
+      "id": "Doist.Todoist"
+    },
+    {
+      "name": "WPS Office",
+      "type": "scoop",
+      "id": "extras/wpsoffice"
+    },
+    {
+      "name": "Zotero",
+      "type": "scoop",
+      "id": "extras/zotero"
+    }
+  ],
+  "Fonts": [
+    {
+      "name": "0xProto",
+      "type": "scoop",
+      "id": "nerd-fonts/0xProto-NF"
+    },
+    {
+      "name": "0xProto Mono",
+      "type": "scoop",
+      "id": "nerd-fonts/0xProto-NF-Mono"
+    },
+    {
+      "name": "Cascadia Code",
+      "type": "scoop",
+      "id": "nerd-fonts/Cascadia-Code"
+    },
+    {
+      "name": "JetBrains Mono",
+      "type": "scoop",
+      "id": "nerd-fonts/JetBrains-Mono"
+    }
   ],
   "Design": [
-    { "name": "Affinity", "type": "winget", "id": "Canva.Affinity" },
-    { "name": "Blender", "type": "scoop", "id": "extras/blender" },
-    { "name": "Canva", "type": "winget", "id": "Canva.Canva" },
-    { "name": "Inkscape", "type": "scoop", "id": "extras/inkscape" },
-    { "name": "Krita", "type": "scoop", "id": "extras/krita" }
+    {
+      "name": "Affinity",
+      "type": "winget",
+      "id": "Canva.Affinity"
+    },
+    {
+      "name": "Blender",
+      "type": "scoop",
+      "id": "extras/blender"
+    },
+    {
+      "name": "Canva",
+      "type": "winget",
+      "id": "Canva.Canva"
+    },
+    {
+      "name": "Inkscape",
+      "type": "scoop",
+      "id": "extras/inkscape"
+    },
+    {
+      "name": "Krita",
+      "type": "scoop",
+      "id": "extras/krita"
+    }
   ],
   "Games": [
-    { "name": "Epic Games Launcher", "type": "scoop", "id": "games/epic-games-launcher" },
-    { "name": "Steam", "type": "scoop", "id": "games/steam" }
+    {
+      "name": "ATLauncher",
+      "type": "scoop",
+      "id": "games/atlauncher"
+    },
+    {
+      "name": "CnCNet Mental Omega",
+      "type": "scoop",
+      "id": "okibcn_ScoopMaster/cncnet-mental-omega"
+    },
+    {
+      "name": "Epic Games Launcher",
+      "type": "scoop",
+      "id": "games/epic-games-launcher"
+    },
+    {
+      "name": "Steam",
+      "type": "scoop",
+      "id": "games/steam"
+    }
   ],
   "Media": [
-    { "name": "foobar2000", "type": "scoop", "id": "extras/foobar2000" },
-    { "name": "K-Lite Codec Pack Mega", "type": "scoop", "id": "nonportable/k-lite-codec-pack-mega-np" },
-    { "name": "Kdenlive", "type": "scoop", "id": "extras/kdenlive" },
-    { "name": "OBS Studio", "type": "scoop", "id": "extras/obs-studio" },
-    { "name": "Screenbox", "type": "winget", "id": "Starpine.Screenbox" },
-    { "name": "Vencord Installer", "type": "scoop", "id": "extras/vencord-installer" },
-    { "name": "VLC", "type": "scoop", "id": "extras/vlc" }
+    {
+      "name": "foobar2000",
+      "type": "scoop",
+      "id": "extras/foobar2000"
+    },
+    {
+      "name": "K-Lite Codec Pack Mega",
+      "type": "scoop",
+      "id": "nonportable/k-lite-codec-pack-mega-np"
+    },
+    {
+      "name": "Kdenlive",
+      "type": "scoop",
+      "id": "extras/kdenlive"
+    },
+    {
+      "name": "OBS Studio",
+      "type": "scoop",
+      "id": "extras/obs-studio"
+    },
+    {
+      "name": "Screenbox",
+      "type": "winget",
+      "id": "Starpine.Screenbox"
+    },
+    {
+      "name": "Vencord Installer",
+      "type": "scoop",
+      "id": "extras/vencord-installer"
+    },
+    {
+      "name": "VLC",
+      "type": "scoop",
+      "id": "extras/vlc"
+    }
   ],
   "Runtimes": [
-    { "name": ".NET Runtime 10.0", "type": "scoop", "id": "versions/windowsdesktop-runtime-10.0" },
-    { "name": ".NET Runtime 6.0", "type": "scoop", "id": "versions/windowsdesktop-runtime-6.0" },
-    { "name": ".NET Runtime 7.0", "type": "scoop", "id": "versions/windowsdesktop-runtime-7.0" },
-    { "name": ".NET Runtime 8.0", "type": "scoop", "id": "versions/windowsdesktop-runtime-8.0" },
-    { "name": ".NET Runtime 9.0", "type": "scoop", "id": "versions/windowsdesktop-runtime-9.0" },
-    { "name": "VCRedist (Base)", "type": "scoop", "id": "extras/vcredist" },
-    { "name": "VCRedist 2005", "type": "scoop", "id": "extras/vcredist2005" },
-    { "name": "VCRedist 2008", "type": "scoop", "id": "extras/vcredist2008" },
-    { "name": "VCRedist 2010", "type": "scoop", "id": "extras/vcredist2010" },
-    { "name": "VCRedist 2012", "type": "scoop", "id": "extras/vcredist2012" },
-    { "name": "VCRedist 2013", "type": "scoop", "id": "extras/vcredist2013" },
-    { "name": "VCRedist 2022", "type": "scoop", "id": "extras/vcredist2022" }
+    {
+      "name": ".NET Runtime 10.0",
+      "type": "scoop",
+      "id": "versions/windowsdesktop-runtime-10.0"
+    },
+    {
+      "name": ".NET Runtime 6.0",
+      "type": "scoop",
+      "id": "versions/windowsdesktop-runtime-6.0"
+    },
+    {
+      "name": ".NET Runtime 7.0",
+      "type": "scoop",
+      "id": "versions/windowsdesktop-runtime-7.0"
+    },
+    {
+      "name": ".NET Runtime 8.0",
+      "type": "scoop",
+      "id": "versions/windowsdesktop-runtime-8.0"
+    },
+    {
+      "name": ".NET Runtime 9.0",
+      "type": "scoop",
+      "id": "versions/windowsdesktop-runtime-9.0"
+    },
+    {
+      "name": "VCRedist (Base)",
+      "type": "scoop",
+      "id": "extras/vcredist"
+    },
+    {
+      "name": "VCRedist 2005",
+      "type": "scoop",
+      "id": "extras/vcredist2005"
+    },
+    {
+      "name": "VCRedist 2008",
+      "type": "scoop",
+      "id": "extras/vcredist2008"
+    },
+    {
+      "name": "VCRedist 2010",
+      "type": "scoop",
+      "id": "extras/vcredist2010"
+    },
+    {
+      "name": "VCRedist 2012",
+      "type": "scoop",
+      "id": "extras/vcredist2012"
+    },
+    {
+      "name": "VCRedist 2013",
+      "type": "scoop",
+      "id": "extras/vcredist2013"
+    },
+    {
+      "name": "VCRedist 2022",
+      "type": "scoop",
+      "id": "extras/vcredist2022"
+    }
   ],
   "Advanced Tools": [
     {
       "name": "Microsoft Office Suite",
       "handler": "odt",
       "apps": [
-        { "name": "Access", "id": "Access", "default": false },
-        { "name": "Bing", "id": "Bing", "default": false },
-        { "name": "Excel", "id": "Excel", "default": true },
-        { "name": "Groove (OneDrive for Business)", "id": "Groove", "default": false },
-        { "name": "Lync (Skype for Business)", "id": "Lync", "default": false },
-        { "name": "OneDrive", "id": "OneDrive", "default": false },
-        { "name": "OneNote", "id": "OneNote", "default": false },
-        { "name": "Outlook", "id": "Outlook", "default": false },
-        { "name": "PowerPoint", "id": "PowerPoint", "default": true },
-        { "name": "Publisher", "id": "Publisher", "default": false },
-        { "name": "Word", "id": "Word", "default": true }
+        {
+          "name": "Access",
+          "id": "Access",
+          "default": false
+        },
+        {
+          "name": "Bing",
+          "id": "Bing",
+          "default": false
+        },
+        {
+          "name": "Excel",
+          "id": "Excel",
+          "default": true
+        },
+        {
+          "name": "Groove (OneDrive for Business)",
+          "id": "Groove",
+          "default": false
+        },
+        {
+          "name": "Lync (Skype for Business)",
+          "id": "Lync",
+          "default": false
+        },
+        {
+          "name": "OneDrive",
+          "id": "OneDrive",
+          "default": false
+        },
+        {
+          "name": "OneNote",
+          "id": "OneNote",
+          "default": false
+        },
+        {
+          "name": "Outlook",
+          "id": "Outlook",
+          "default": false
+        },
+        {
+          "name": "PowerPoint",
+          "id": "PowerPoint",
+          "default": true
+        },
+        {
+          "name": "Publisher",
+          "id": "Publisher",
+          "default": false
+        },
+        {
+          "name": "Word",
+          "id": "Word",
+          "default": true
+        }
       ]
     },
     {

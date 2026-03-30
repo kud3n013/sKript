@@ -1,0 +1,1 @@
+Write-Host "PSCommandPath: $PSCommandPath"

@@ -497,257 +497,274 @@ try {
 
     if ($null -ne $appsConfigPath -and (Test-Path $appsConfigPath)) {
         $appsConfig = Get-Content -Raw $appsConfigPath | ConvertFrom-Json
-    } else {
+    }
+    else {
         $appsConfig = (Invoke-WebRequest -Uri $appsConfigUrl -UseBasicParsing).Content | ConvertFrom-Json
     }
     foreach ($category in $appsConfig.PSObject.Properties) {
-            $groupStack = New-Object System.Windows.Controls.StackPanel
-            $groupStack.Margin = "0,0,20,30"
-            $groupStack.Width = 220
+        $groupStack = New-Object System.Windows.Controls.StackPanel
+        $groupStack.Margin = "0,0,20,30"
+        $groupStack.Width = 220
 
-            $header = New-Object System.Windows.Controls.TextBlock
-            $header.Text = $category.Name
-            $header.FontWeight = "SemiBold"
-            $header.FontSize = 16
-            $header.SetResourceReference([System.Windows.Controls.TextBlock]::ForegroundProperty, "TextLabel")
-            $header.Margin = "0,0,0,10"
-            $groupStack.Children.Add($header) | Out-Null
+        $header = New-Object System.Windows.Controls.TextBlock
+        $header.Text = $category.Name
+        $header.FontWeight = "SemiBold"
+        $header.FontSize = 16
+        $header.SetResourceReference([System.Windows.Controls.TextBlock]::ForegroundProperty, "TextLabel")
+        $header.Margin = "0,0,0,10"
+        $groupStack.Children.Add($header) | Out-Null
 
-            foreach ($app in $category.Value) {
-                # Advanced Configuration items render sub-app checkboxes inline
-                if ($app.handler -and $app.handler -eq "odt") {
-                    # App name label
-                    $label = New-Object System.Windows.Controls.TextBlock
-                    $label.Text = $app.name
-                    $label.FontWeight = "SemiBold"
-                    $label.FontSize = 14
-                    $label.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#4338CA"))
-                    $label.Margin = "0,4,0,6"
-                    $groupStack.Children.Add($label) | Out-Null
+        foreach ($app in $category.Value) {
+            # Advanced Configuration items render sub-app checkboxes inline
+            if ($app.handler -and $app.handler -eq "odt") {
+                # App name label
+                $label = New-Object System.Windows.Controls.TextBlock
+                $label.Text = $app.name
+                $label.FontWeight = "SemiBold"
+                $label.FontSize = 14
+                $label.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#4338CA"))
+                $label.Margin = "0,4,0,6"
+                $groupStack.Children.Add($label) | Out-Null
 
-                    # Sub-app checkboxes
-                    $handlerCheckboxes = @()
-                    foreach ($subApp in $app.apps) {
-                        $cb = New-Object System.Windows.Controls.CheckBox
-                        $cb.Content = $subApp.name
-                        $cb.Tag = $subApp.id
-                        $cb.IsChecked = $subApp.default
-                        $cb.Margin = "10,3,0,3"
-                        $cb.FontSize = 13
-                        $cb.SetResourceReference([System.Windows.Controls.Control]::ForegroundProperty, "TextBody")
-                        $handlerCheckboxes += $cb
-                        $groupStack.Children.Add($cb) | Out-Null
-                    }
+                # Sub-app checkboxes
+                $handlerCheckboxes = @()
+                foreach ($subApp in $app.apps) {
+                    $cb = New-Object System.Windows.Controls.CheckBox
+                    $cb.Content = $subApp.name
+                    $cb.Tag = $subApp.id
+                    $cb.IsChecked = $subApp.default
+                    $cb.Margin = "10,3,0,3"
+                    $cb.FontSize = 13
+                    $cb.SetResourceReference([System.Windows.Controls.Control]::ForegroundProperty, "TextBody")
+                    $handlerCheckboxes += $cb
+                    $groupStack.Children.Add($cb) | Out-Null
+                }
 
-                    # Store checkboxes for install handler
-                    $global:AdvancedHandlerCheckboxes[$app.name] = @{
-                        handler = $app.handler
-                        checkboxes = $handlerCheckboxes
-                    }
+                # Store checkboxes for install handler
+                $global:AdvancedHandlerCheckboxes[$app.name] = @{
+                    handler    = $app.handler
+                    checkboxes = $handlerCheckboxes
+                }
 
-                    # Vietnamese language option
-                    $viCheckbox = New-Object System.Windows.Controls.CheckBox
-                    $viCheckbox.Content = "Include Vietnamese"
-                    $viCheckbox.IsChecked = $false
-                    $viCheckbox.Margin = "0,8,0,4"
-                    $viCheckbox.FontSize = 13
-                    $viCheckbox.FontStyle = "Italic"
-                    $viCheckbox.SetResourceReference([System.Windows.Controls.Control]::ForegroundProperty, "TextBody")
-                    $groupStack.Children.Add($viCheckbox) | Out-Null
+                # Vietnamese language option
+                $viCheckbox = New-Object System.Windows.Controls.CheckBox
+                $viCheckbox.Content = "Include Vietnamese"
+                $viCheckbox.IsChecked = $false
+                $viCheckbox.Margin = "0,8,0,4"
+                $viCheckbox.FontSize = 13
+                $viCheckbox.FontStyle = "Italic"
+                $viCheckbox.SetResourceReference([System.Windows.Controls.Control]::ForegroundProperty, "TextBody")
+                $groupStack.Children.Add($viCheckbox) | Out-Null
 
-                    $global:AdvancedHandlerCheckboxes[$app.name].viCheckbox = $viCheckbox
+                $global:AdvancedHandlerCheckboxes[$app.name].viCheckbox = $viCheckbox
 
-                    # Inline install button
-                    $installBtn = New-Object System.Windows.Controls.Button
-                    $installBtn.Content = "Install $($app.name)"
-                    $installBtn.Tag = $app.name
-                    $installBtn.Margin = "0,8,0,4"
-                    $installBtn.Padding = "12,6"
-                    $installBtn.FontSize = 13
-                    $installBtn.FontWeight = "SemiBold"
-                    $installBtn.Background = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#10B981"))
-                    $installBtn.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("White"))
-                    $installBtn.BorderThickness = "0"
+                # Inline install button
+                $installBtn = New-Object System.Windows.Controls.Button
+                $installBtn.Content = "Install $($app.name)"
+                $installBtn.Tag = $app.name
+                $installBtn.Margin = "0,8,0,4"
+                $installBtn.Padding = "12,6"
+                $installBtn.FontSize = 13
+                $installBtn.FontWeight = "SemiBold"
+                $installBtn.Background = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#10B981"))
+                $installBtn.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("White"))
+                $installBtn.BorderThickness = "0"
 
-                    $installBtn.Add_Click({
+                $installBtn.Add_Click({
                         param($s, $e)
                         $clickedAppName = $s.Tag
                         Invoke-AdvancedInstall -AppName $clickedAppName -Button $s
                     }.GetNewClosure())
 
-                    $groupStack.Children.Add($installBtn) | Out-Null
+                $groupStack.Children.Add($installBtn) | Out-Null
 
-                    # Activation notice
-                    $notice = New-Object System.Windows.Controls.TextBlock
-                    $notice.Text = "After installing, run MAS to activate Office:`n  [2] Office Activation → [1] Ohook → [0] Exit"
-                    $notice.TextWrapping = "Wrap"
-                    $notice.FontSize = 12
-                    $notice.FontStyle = "Italic"
-                    $notice.Margin = "0,8,0,4"
-                    $notice.SetResourceReference([System.Windows.Controls.TextBlock]::ForegroundProperty, "TextBody")
-                    $groupStack.Children.Add($notice) | Out-Null
+                # Activation notice
+                $notice = New-Object System.Windows.Controls.TextBlock
+                $notice.Text = "After installing, run MAS to activate Office:`n  [2] Office Activation → [1] Ohook → [0] Exit"
+                $notice.TextWrapping = "Wrap"
+                $notice.FontSize = 12
+                $notice.FontStyle = "Italic"
+                $notice.Margin = "0,8,0,4"
+                $notice.SetResourceReference([System.Windows.Controls.TextBlock]::ForegroundProperty, "TextBody")
+                $groupStack.Children.Add($notice) | Out-Null
 
-                    # MAS Activation button
-                    $masOnlineBtn = New-Object System.Windows.Controls.Button
-                    $masOnlineBtn.Content = "Activate Office (MAS)"
-                    $masOnlineBtn.Margin = "0,4,0,4"
-                    $masOnlineBtn.Padding = "12,6"
-                    $masOnlineBtn.FontSize = 13
-                    $masOnlineBtn.FontWeight = "SemiBold"
-                    $masOnlineBtn.Background = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#E0E7FF"))
-                    $masOnlineBtn.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#4338CA"))
-                    $masOnlineBtn.BorderThickness = "0"
+                # MAS Activation button
+                $masOnlineBtn = New-Object System.Windows.Controls.Button
+                $masOnlineBtn.Content = "Activate Office (MAS)"
+                $masOnlineBtn.Margin = "0,4,0,4"
+                $masOnlineBtn.Padding = "12,6"
+                $masOnlineBtn.FontSize = 13
+                $masOnlineBtn.FontWeight = "SemiBold"
+                $masOnlineBtn.Background = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#E0E7FF"))
+                $masOnlineBtn.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#4338CA"))
+                $masOnlineBtn.BorderThickness = "0"
 
-                    $masOnlineBtn.Add_Click({
+                $masOnlineBtn.Add_Click({
                         $masOnlineCmd = 'try { irm https://get.activated.win -ErrorAction Stop | iex } catch { iex (curl.exe -s --doh-url https://1.1.1.1/dns-query https://get.activated.win | Out-String) }'
                         Start-Process "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"$masOnlineCmd`"" -Verb RunAs
                     })
 
-                    $groupStack.Children.Add($masOnlineBtn) | Out-Null
-                }
-                elseif ($app.handler -and $app.handler -eq "searxng") {
-                    # SearxNG section label
-                    $label = New-Object System.Windows.Controls.TextBlock
-                    $label.Text = $app.name
-                    $label.FontWeight = "SemiBold"
-                    $label.FontSize = 14
-                    $label.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#4338CA"))
-                    $label.Margin = "0,14,0,4"
-                    $groupStack.Children.Add($label) | Out-Null
-
-                    # Description
-                    $desc = New-Object System.Windows.Controls.TextBlock
-                    $desc.Text = "Privacy-respecting metasearch engine via Docker.`nRuns on port 8888, auto-starts on boot."
-                    $desc.TextWrapping = "Wrap"
-                    $desc.FontSize = 12
-                    $desc.FontStyle = "Italic"
-                    $desc.Margin = "0,2,0,6"
-                    $desc.SetResourceReference([System.Windows.Controls.TextBlock]::ForegroundProperty, "TextBody")
-                    $groupStack.Children.Add($desc) | Out-Null
-
-                    # Store handler reference
-                    $global:AdvancedHandlerCheckboxes[$app.name] = @{
-                        handler = $app.handler
-                        checkboxes = @()
-                    }
-
-                    # Install button
-                    $searxBtn = New-Object System.Windows.Controls.Button
-                    $searxBtn.Content = "Install $($app.name)"
-                    $searxBtn.Tag = $app.name
-                    $searxBtn.Margin = "0,4,0,4"
-                    $searxBtn.Padding = "12,6"
-                    $searxBtn.FontSize = 13
-                    $searxBtn.FontWeight = "SemiBold"
-                    $searxBtn.Background = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#10B981"))
-                    $searxBtn.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("White"))
-                    $searxBtn.BorderThickness = "0"
-
-                    $searxBtn.Add_Click({
-                        param($s, $e)
-                        $clickedAppName = $s.Tag
-                        Invoke-AdvancedInstall -AppName $clickedAppName -Button $s
-                    }.GetNewClosure())
-
-                    $groupStack.Children.Add($searxBtn) | Out-Null
-                }
-                elseif ($app.handler -and $app.handler -eq "docker") {
-                    # Docker section label
-                    $label = New-Object System.Windows.Controls.TextBlock
-                    $label.Text = $app.name
-                    $label.FontWeight = "SemiBold"
-                    $label.FontSize = 14
-                    $label.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#4338CA"))
-                    $label.Margin = "0,14,0,4"
-                    $groupStack.Children.Add($label) | Out-Null
-
-                    # Description
-                    $desc = New-Object System.Windows.Controls.TextBlock
-                    $desc.Text = "Containerization platform with WSL backend.`nInstalls Docker CLI & Daemon and updates WSL."
-                    $desc.TextWrapping = "Wrap"
-                    $desc.FontSize = 12
-                    $desc.FontStyle = "Italic"
-                    $desc.Margin = "0,2,0,6"
-                    $desc.SetResourceReference([System.Windows.Controls.TextBlock]::ForegroundProperty, "TextBody")
-                    $groupStack.Children.Add($desc) | Out-Null
-
-                    # Store handler reference
-                    $global:AdvancedHandlerCheckboxes[$app.name] = @{
-                        handler = $app.handler
-                        checkboxes = @()
-                    }
-
-                    # Install button
-                    $dockerBtn = New-Object System.Windows.Controls.Button
-                    $dockerBtn.Content = "Install $($app.name)"
-                    $dockerBtn.Tag = $app.name
-                    $dockerBtn.Margin = "0,4,0,4"
-                    $dockerBtn.Padding = "12,6"
-                    $dockerBtn.FontSize = 13
-                    $dockerBtn.FontWeight = "SemiBold"
-                    $dockerBtn.Background = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#10B981"))
-                    $dockerBtn.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("White"))
-                    $dockerBtn.BorderThickness = "0"
-
-                    $dockerBtn.Add_Click({
-                        param($s, $e)
-                        $clickedAppName = $s.Tag
-                        Invoke-AdvancedInstall -AppName $clickedAppName -Button $s
-                    }.GetNewClosure())
-
-                    $groupStack.Children.Add($dockerBtn) | Out-Null
-                }
-                else {
-                    # Standard apps render as checkboxes
-                    $cb = New-Object System.Windows.Controls.CheckBox
-                    $cb.Content = $app.name
-                    
-                    # Tag metadata for install process
-                    $tagObj = New-Object PSObject -Property @{ id = $app.id; type = $app.type }
-                    $cb.Tag = $tagObj
-                    
-                    $cb.Margin = "0,4,0,4"
-                    $cb.FontSize = 14
-                    
-                    if ([string]::IsNullOrWhiteSpace($app.id)) {
-                        $cb.IsEnabled = $false
-                        $cb.Opacity = 0.5
-                        $cb.SetResourceReference([System.Windows.Controls.Control]::ForegroundProperty, "TextBody")
-                    }
-                    elseif ($app.type -eq "scoop") {
-                        $bucketName = $app.id.Split("/")[0]
-                        $officialBuckets = @("main", "extras", "versions", "nirsoft", "sysinternals", "php", "nerd-fonts", "nonportable", "java", "games")
-                        
-                        if ($officialBuckets -contains $bucketName) {
-                            $cb.Foreground = "#059669" # Emerald/Green
-                        } else {
-                            $cb.Foreground = "#2563EB" # Blue
-                        }
-                    }
-                    elseif ($app.type -eq "winget") {
-                        $cb.Foreground = "#2563EB" # Blue
-                    }
-                    else {
-                        $cb.SetResourceReference([System.Windows.Controls.Control]::ForegroundProperty, "TextBody")
-                    }
-                    
-                    $global:AppCheckboxes += $cb
-                    $groupStack.Children.Add($cb) | Out-Null
-                }
+                $groupStack.Children.Add($masOnlineBtn) | Out-Null
             }
+            elseif ($app.handler -and $app.handler -eq "docker") {
+                # Docker section label
+                $label = New-Object System.Windows.Controls.TextBlock
+                $label.Text = $app.name
+                $label.FontWeight = "SemiBold"
+                $label.FontSize = 14
+                $label.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#4338CA"))
+                $label.Margin = "0,14,0,4"
+                $groupStack.Children.Add($label) | Out-Null
 
-            if ($category.Name -in @("Useful Tools", "Server Tools")) {
-                $AdvancedListPanel.Children.Add($groupStack) | Out-Null
+                # Description
+                $desc = New-Object System.Windows.Controls.TextBlock
+                $desc.Text = "Docker CLI and Daemon via Scoop.`nClick 'Enable Docker' to initialize daemon."
+                $desc.TextWrapping = "Wrap"
+                $desc.FontSize = 12
+                $desc.FontStyle = "Italic"
+                $desc.Margin = "0,2,0,6"
+                $desc.SetResourceReference([System.Windows.Controls.TextBlock]::ForegroundProperty, "TextBody")
+                $groupStack.Children.Add($desc) | Out-Null
+
+                # Store handler reference
+                $global:AdvancedHandlerCheckboxes[$app.name] = @{
+                    handler    = $app.handler
+                    checkboxes = @()
+                }
+
+                # Install button
+                $dockerBtn = New-Object System.Windows.Controls.Button
+                $dockerBtn.Content = "Install $($app.name)"
+                $dockerBtn.Tag = $app.name
+                $dockerBtn.Margin = "0,4,0,4"
+                $dockerBtn.Padding = "12,6"
+                $dockerBtn.FontSize = 13
+                $dockerBtn.FontWeight = "SemiBold"
+                $dockerBtn.Background = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#10B981"))
+                $dockerBtn.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("White"))
+                $dockerBtn.BorderThickness = "0"
+
+                $dockerBtn.Add_Click({
+                        param($s, $e)
+                        $clickedAppName = $s.Tag
+                        Invoke-AdvancedInstall -AppName $clickedAppName -Button $s
+                    }.GetNewClosure())
+
+                $groupStack.Children.Add($dockerBtn) | Out-Null
+                
+                # Enable Service Button
+                $enableDockerBtn = New-Object System.Windows.Controls.Button
+                $enableDockerBtn.Content = "Enable Docker Daemon"
+                $enableDockerBtn.Margin = "0,4,0,4"
+                $enableDockerBtn.Padding = "12,6"
+                $enableDockerBtn.FontSize = 13
+                $enableDockerBtn.FontWeight = "SemiBold"
+                $enableDockerBtn.Background = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#E0E7FF"))
+                $enableDockerBtn.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#4338CA"))
+                $enableDockerBtn.BorderThickness = "0"
+                $enableDockerBtn.Add_Click({
+                    Start-Process "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"dockerd --register-service; Start-Service docker; Write-Host 'Docker daemon enabled and started. You can now use docker commands.' -ForegroundColor Green; Start-Sleep -Seconds 4`"" -Verb RunAs
+                })
+                $groupStack.Children.Add($enableDockerBtn) | Out-Null
+            }
+            elseif ($app.handler -and $app.handler -eq "searxng") {
+                # SearxNG section label
+                $label = New-Object System.Windows.Controls.TextBlock
+                $label.Text = $app.name
+                $label.FontWeight = "SemiBold"
+                $label.FontSize = 14
+                $label.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#4338CA"))
+                $label.Margin = "0,14,0,4"
+                $groupStack.Children.Add($label) | Out-Null
+
+                # Description
+                $desc = New-Object System.Windows.Controls.TextBlock
+                $desc.Text = "Privacy-respecting metasearch engine via Docker.`nRuns on port 8888, auto-starts on boot."
+                $desc.TextWrapping = "Wrap"
+                $desc.FontSize = 12
+                $desc.FontStyle = "Italic"
+                $desc.Margin = "0,2,0,6"
+                $desc.SetResourceReference([System.Windows.Controls.TextBlock]::ForegroundProperty, "TextBody")
+                $groupStack.Children.Add($desc) | Out-Null
+
+                # Store handler reference
+                $global:AdvancedHandlerCheckboxes[$app.name] = @{
+                    handler    = $app.handler
+                    checkboxes = @()
+                }
+
+                # Install button
+                $searxBtn = New-Object System.Windows.Controls.Button
+                $searxBtn.Content = "Install $($app.name)"
+                $searxBtn.Tag = $app.name
+                $searxBtn.Margin = "0,4,0,4"
+                $searxBtn.Padding = "12,6"
+                $searxBtn.FontSize = 13
+                $searxBtn.FontWeight = "SemiBold"
+                $searxBtn.Background = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#10B981"))
+                $searxBtn.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("White"))
+                $searxBtn.BorderThickness = "0"
+
+                $searxBtn.Add_Click({
+                        param($s, $e)
+                        $clickedAppName = $s.Tag
+                        Invoke-AdvancedInstall -AppName $clickedAppName -Button $s
+                    }.GetNewClosure())
+
+                $groupStack.Children.Add($searxBtn) | Out-Null
             }
             else {
-                $AppListPanel.Children.Add($groupStack) | Out-Null
+                # Standard apps render as checkboxes
+                $cb = New-Object System.Windows.Controls.CheckBox
+                $cb.Content = $app.name
+                    
+                # Tag metadata for install process
+                $tagObj = New-Object PSObject -Property @{ id = $app.id; type = $app.type }
+                $cb.Tag = $tagObj
+                    
+                $cb.Margin = "0,4,0,4"
+                $cb.FontSize = 14
+                    
+                if ([string]::IsNullOrWhiteSpace($app.id)) {
+                    $cb.IsEnabled = $false
+                    $cb.Opacity = 0.5
+                    $cb.SetResourceReference([System.Windows.Controls.Control]::ForegroundProperty, "TextBody")
+                }
+                elseif ($app.type -eq "scoop") {
+                    $bucketName = $app.id.Split("/")[0]
+                    $officialBuckets = @("main", "extras", "versions", "nirsoft", "sysinternals", "php", "nerd-fonts", "nonportable", "java", "games")
+                        
+                    if ($officialBuckets -contains $bucketName) {
+                        $cb.Foreground = "#059669" # Emerald/Green
+                    }
+                    else {
+                        $cb.Foreground = "#2563EB" # Blue
+                    }
+                }
+                elseif ($app.type -eq "winget") {
+                    $cb.Foreground = "#2563EB" # Blue
+                }
+                else {
+                    $cb.SetResourceReference([System.Windows.Controls.Control]::ForegroundProperty, "TextBody")
+                }
+                    
+                $global:AppCheckboxes += $cb
+                $groupStack.Children.Add($cb) | Out-Null
             }
         }
+
+        if ($category.Name -in @("Useful Tools", "Server Tools")) {
+            $AdvancedListPanel.Children.Add($groupStack) | Out-Null
+        }
+        else {
+            $AppListPanel.Children.Add($groupStack) | Out-Null
+        }
     }
-    catch {
-        Write-Host "Failed to load or parse applications.json config!" -ForegroundColor Red
-        Write-Host $_.Exception.Message -ForegroundColor Red
-    }
+}
+catch {
+    Write-Host "Failed to load or parse applications.json config!" -ForegroundColor Red
+    Write-Host $_.Exception.Message -ForegroundColor Red
+}
 
 # Bind Bucket List Handlers
 $BucketListPanel = $Form.FindName("BucketListPanel")
@@ -755,41 +772,44 @@ if ($null -ne $BucketListPanel) {
     foreach ($tb in $BucketListPanel.Children) {
         if ($tb -is [System.Windows.Controls.Primitives.ToggleButton]) {
             $tb.Add_Checked({
-                param($s, $e)
-                $tagStr = $s.Tag -as [string]
-                $s.Content = "..."
-                $s.IsEnabled = $false
-                [System.Windows.Forms.Application]::DoEvents()
+                    param($s, $e)
+                    $tagStr = $s.Tag -as [string]
+                    $s.Content = "..."
+                    $s.IsEnabled = $false
+                    [System.Windows.Forms.Application]::DoEvents()
                 
-                try {
-                    $parts = $tagStr.Split("|")
-                    if ($parts.Count -eq 2) {
-                        scoop bucket add $parts[0] $parts[1] | Out-Null
-                    } else {
-                        scoop bucket add $tagStr | Out-Null
+                    try {
+                        $parts = $tagStr.Split("|")
+                        if ($parts.Count -eq 2) {
+                            scoop bucket add $parts[0] $parts[1] | Out-Null
+                        }
+                        else {
+                            scoop bucket add $tagStr | Out-Null
+                        }
                     }
-                } catch {}
+                    catch {}
                 
-                $s.Content = $s.Uid
-                $s.IsEnabled = $true
-            })
+                    $s.Content = $s.Uid
+                    $s.IsEnabled = $true
+                })
             
             $tb.Add_Unchecked({
-                param($s, $e)
-                $tagStr = $s.Tag -as [string]
-                $s.Content = "..."
-                $s.IsEnabled = $false
-                [System.Windows.Forms.Application]::DoEvents()
+                    param($s, $e)
+                    $tagStr = $s.Tag -as [string]
+                    $s.Content = "..."
+                    $s.IsEnabled = $false
+                    [System.Windows.Forms.Application]::DoEvents()
                 
-                try {
-                    $parts = $tagStr.Split("|")
-                    $aliasName = $parts[0]
-                    scoop bucket rm $aliasName | Out-Null
-                } catch {}
+                    try {
+                        $parts = $tagStr.Split("|")
+                        $aliasName = $parts[0]
+                        scoop bucket rm $aliasName | Out-Null
+                    }
+                    catch {}
                 
-                $s.Content = $s.Uid
-                $s.IsEnabled = $true
-            })
+                    $s.Content = $s.Uid
+                    $s.IsEnabled = $true
+                })
         }
     }
 }
@@ -1011,6 +1031,19 @@ $BtnInstallSelected.Add_Click({
             }
         }
 
+        # WSL Setup for Docker
+        if ($scoopApps -contains "main/docker") {
+            Write-Host "Docker installation detected. Enabling Windows Subsystem for Linux (WSL)..." -ForegroundColor Cyan
+            try {
+                wsl --install
+                wsl --update
+                Write-Host "WSL installation completed successfully." -ForegroundColor Green
+            }
+            catch {
+                Write-Host "Failed to install or update WSL. Manual setup may be required." -ForegroundColor Red
+                Write-Host $_ -ForegroundColor Red
+            }
+        }
 
         $BtnInstallSelected.Content = "Install Selected"
         $BtnInstallSelected.IsEnabled = $true
@@ -1044,7 +1077,8 @@ Start-Process powershell.exe -ArgumentList '-NoProfile -ExecutionPolicy Bypass -
             
             Write-Host "Created shortcut at $shortcutPath" -ForegroundColor Green
             $BtnCreateMainShortcut.Content = "Shortcut Created"
-        } catch {
+        }
+        catch {
             Write-Host "Failed to create shortcut: $_" -ForegroundColor Red
             $BtnCreateMainShortcut.Content = "Creation Failed"
         }
@@ -1056,12 +1090,12 @@ Start-Process powershell.exe -ArgumentList '-NoProfile -ExecutionPolicy Bypass -
         $PowerShell = [powershell]::Create()
         $PowerShell.Runspace = $Runspace
         $PowerShell.AddScript({
-            Start-Sleep -Seconds 2
-            $Form.Dispatcher.Invoke({
-                $BtnCreateMainShortcut.Content = "Create Setup Utility Shortcut (.lnk)"
-                $BtnCreateMainShortcut.IsEnabled = $true
-            })
-        }) | Out-Null
+                Start-Sleep -Seconds 2
+                $Form.Dispatcher.Invoke({
+                        $BtnCreateMainShortcut.Content = "Create Setup Utility Shortcut (.lnk)"
+                        $BtnCreateMainShortcut.IsEnabled = $true
+                    })
+            }) | Out-Null
         $PowerShell.Runspace.SessionStateProxy.SetVariable("BtnCreateMainShortcut", $BtnCreateMainShortcut)
         $PowerShell.Runspace.SessionStateProxy.SetVariable("Form", $Form)
         $PowerShell.BeginInvoke() | Out-Null

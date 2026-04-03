@@ -1,6 +1,7 @@
-# setup-script
+# setup-sKript
+*Yes, I know, it's a typo.*
 
-A collection of scripts and utilities to automate and manage the setup of my Windows and Linux environments.
+A collection of scripts and utilities to automate and manage the setup of my Windows (and maybe Linux) environments.
 
 ## Windows Setup Utility
 

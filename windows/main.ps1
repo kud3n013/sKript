@@ -451,6 +451,40 @@ $excludeLines    </Product>$viProofingProduct
             $Button.IsEnabled = $true
         }
     }
+    elseif ($data.handler -eq "docker") {
+        $Button.Content = "Installing..."
+        $Button.IsEnabled = $false
+        [System.Windows.Forms.Application]::DoEvents()
+
+        try {
+            Write-Host "Installing Docker via Scoop..." -ForegroundColor Cyan
+            if (-not (Get-Command docker -ErrorAction SilentlyContinue)) {
+                scoop install main/docker
+                [System.Windows.Forms.Application]::DoEvents()
+            } else {
+                Write-Host "Docker is already installed." -ForegroundColor Yellow
+            }
+            if (-not (Get-Command docker-compose -ErrorAction SilentlyContinue)) {
+                scoop install main/docker-compose
+                [System.Windows.Forms.Application]::DoEvents()
+            } else {
+                Write-Host "Docker Compose is already installed." -ForegroundColor Yellow
+            }
+
+            Write-Host "Enabling Windows Subsystem for Linux (WSL)..." -ForegroundColor Cyan
+            wsl --install
+            wsl --update
+            Write-Host "WSL installation completed successfully." -ForegroundColor Green
+            Write-Host "NOTE: A system restart may be required to complete WSL setup." -ForegroundColor Yellow
+
+            $Button.Content = "Docker Installed"
+        }
+        catch {
+            Write-Host "Docker installation failed: $_" -ForegroundColor Red
+            $Button.Content = "Install Failed"
+            $Button.IsEnabled = $true
+        }
+    }
 }
 
 # Load Applications Config and Generate UI Checkboxes
@@ -616,6 +650,52 @@ try {
                     }.GetNewClosure())
 
                     $groupStack.Children.Add($searxBtn) | Out-Null
+                }
+                elseif ($app.handler -and $app.handler -eq "docker") {
+                    # Docker section label
+                    $label = New-Object System.Windows.Controls.TextBlock
+                    $label.Text = $app.name
+                    $label.FontWeight = "SemiBold"
+                    $label.FontSize = 14
+                    $label.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#4338CA"))
+                    $label.Margin = "0,14,0,4"
+                    $groupStack.Children.Add($label) | Out-Null
+
+                    # Description
+                    $desc = New-Object System.Windows.Controls.TextBlock
+                    $desc.Text = "Containerization platform with WSL backend.`nInstalls Docker CLI & Daemon and updates WSL."
+                    $desc.TextWrapping = "Wrap"
+                    $desc.FontSize = 12
+                    $desc.FontStyle = "Italic"
+                    $desc.Margin = "0,2,0,6"
+                    $desc.SetResourceReference([System.Windows.Controls.TextBlock]::ForegroundProperty, "TextBody")
+                    $groupStack.Children.Add($desc) | Out-Null
+
+                    # Store handler reference
+                    $global:AdvancedHandlerCheckboxes[$app.name] = @{
+                        handler = $app.handler
+                        checkboxes = @()
+                    }
+
+                    # Install button
+                    $dockerBtn = New-Object System.Windows.Controls.Button
+                    $dockerBtn.Content = "Install $($app.name)"
+                    $dockerBtn.Tag = $app.name
+                    $dockerBtn.Margin = "0,4,0,4"
+                    $dockerBtn.Padding = "12,6"
+                    $dockerBtn.FontSize = 13
+                    $dockerBtn.FontWeight = "SemiBold"
+                    $dockerBtn.Background = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#10B981"))
+                    $dockerBtn.Foreground = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("White"))
+                    $dockerBtn.BorderThickness = "0"
+
+                    $dockerBtn.Add_Click({
+                        param($s, $e)
+                        $clickedAppName = $s.Tag
+                        Invoke-AdvancedInstall -AppName $clickedAppName -Button $s
+                    }.GetNewClosure())
+
+                    $groupStack.Children.Add($dockerBtn) | Out-Null
                 }
                 else {
                     # Standard apps render as checkboxes
@@ -931,19 +1011,6 @@ $BtnInstallSelected.Add_Click({
             }
         }
 
-        # WSL Setup for Docker
-        if ($scoopApps -contains "main/docker") {
-            Write-Host "Docker installation detected. Enabling Windows Subsystem for Linux (WSL)..." -ForegroundColor Cyan
-            try {
-                wsl --install
-                wsl --update
-                Write-Host "WSL installation completed successfully." -ForegroundColor Green
-            }
-            catch {
-                Write-Host "Failed to install or update WSL. Manual setup may be required." -ForegroundColor Red
-                Write-Host $_ -ForegroundColor Red
-            }
-        }
 
         $BtnInstallSelected.Content = "Install Selected"
         $BtnInstallSelected.IsEnabled = $true

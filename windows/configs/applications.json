@@ -58,6 +58,11 @@
   ],
   "Development": [
     {
+      "name": "Alacritty",
+      "type": "scoop",
+      "id": "extras/alacritty"
+    },
+    {
       "name": "Git",
       "type": "scoop",
       "id": "main/git"

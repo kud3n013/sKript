@@ -6,112 +6,145 @@ Add-Type -AssemblyName System.Windows.Forms
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Windows Setup Skript" Height="650" Width="1000" 
+        Title="Windows Setup Utility" Height="700" Width="1050" 
+        MinWidth="920" MinHeight="550"
         WindowStartupLocation="CenterScreen" Background="{DynamicResource WindowBg}">
     
     <Window.Resources>
-        <!-- Light Theme base -->
-        <SolidColorBrush x:Key="WindowBg" Color="#F9FAFB"/>
-        <SolidColorBrush x:Key="SidebarBg" Color="#F3F4F6"/>
-        <SolidColorBrush x:Key="SidebarBorder" Color="#E5E7EB"/>
+        <!-- Color Palette (Slate scale) -->
+        <SolidColorBrush x:Key="WindowBg" Color="#F8FAFC"/>
+        <SolidColorBrush x:Key="SidebarBg" Color="#F1F5F9"/>
+        <SolidColorBrush x:Key="SidebarBorder" Color="#E2E8F0"/>
         <SolidColorBrush x:Key="PanelBg" Color="White"/>
+        <SolidColorBrush x:Key="CardBg" Color="#F8FAFC"/>
+        <SolidColorBrush x:Key="CardBorder" Color="#E2E8F0"/>
         
-        <SolidColorBrush x:Key="TextHeader" Color="#111827"/>
-        <SolidColorBrush x:Key="TextLabel" Color="#374151"/>
-        <SolidColorBrush x:Key="TextBody" Color="#4B5563"/>
+        <SolidColorBrush x:Key="TextHeader" Color="#0F172A"/>
+        <SolidColorBrush x:Key="TextLabel" Color="#334155"/>
+        <SolidColorBrush x:Key="TextBody" Color="#475569"/>
+        <SolidColorBrush x:Key="TextMuted" Color="#94A3B8"/>
         
-        <SolidColorBrush x:Key="NavBtnFg" Color="#1F2937"/>
-        <SolidColorBrush x:Key="NavBtnActiveBg" Color="#E5E7EB"/>
-        <SolidColorBrush x:Key="SeparatorBg" Color="#E5E7EB"/>
+        <SolidColorBrush x:Key="NavBtnFg" Color="#334155"/>
+        <SolidColorBrush x:Key="NavBtnActiveBg" Color="#E2E8F0"/>
+        <SolidColorBrush x:Key="SeparatorBg" Color="#E2E8F0"/>
+        <SolidColorBrush x:Key="StatusBarBg" Color="#F1F5F9"/>
+        <SolidColorBrush x:Key="SearchBg" Color="#F1F5F9"/>
+        <SolidColorBrush x:Key="SearchBorder" Color="#CBD5E1"/>
     </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!-- Top Navigation Menu -->
+        <!-- ═══ Top Navigation Bar ═══ -->
         <Border Grid.Row="0" Background="{DynamicResource SidebarBg}" BorderBrush="{DynamicResource SidebarBorder}" BorderThickness="0,0,0,1">
-            <WrapPanel Margin="15,10,15,10" Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock Text="Windows Setup Skript" FontWeight="Bold" FontSize="18" Margin="0,0,30,0" Foreground="{DynamicResource TextHeader}" VerticalAlignment="Center"/>
-                
-                <Button Name="NavInstall" Content="Install" Height="40" Margin="0,0,5,0" 
-                        Background="Transparent" BorderThickness="0" FontSize="14" FontWeight="SemiBold"
-                        Padding="20,0" Foreground="{DynamicResource NavBtnFg}">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="6"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                
-                <Button Name="NavUserConfigs" Content="Konfigs" Height="40" Margin="0,0,5,0" 
-                        Background="Transparent" BorderThickness="0" FontSize="14" FontWeight="SemiBold"
-                        Padding="20,0" Foreground="{DynamicResource NavBtnFg}">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="6"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
+            <Grid Margin="20,8,20,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-                <Button Name="NavAdvancedTools" Content="Useful Tools" Height="40" Margin="0,0,5,0" 
-                        Background="Transparent" BorderThickness="0" FontSize="14" FontWeight="SemiBold"
-                        Padding="20,0" Foreground="{DynamicResource NavBtnFg}">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="6"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
+                <!-- App Title -->
+                <TextBlock Grid.Column="0" Text="Setup Utility" FontWeight="Bold" FontSize="17" 
+                           Foreground="{DynamicResource TextHeader}" VerticalAlignment="Center" Margin="0,0,20,0"/>
 
-                <Button Name="NavShortcutsKreation" Content="Shortkuts" Height="40" Margin="0,0,5,0" 
-                        Background="Transparent" BorderThickness="0" FontSize="14" FontWeight="SemiBold"
-                        Padding="20,0" Foreground="{DynamicResource NavBtnFg}">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="6"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
+                <!-- Center Nav Buttons -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button Name="NavInstall" Content="Apps" Height="34" Margin="2,0" 
+                            Background="Transparent" BorderThickness="0" FontSize="13" FontWeight="SemiBold"
+                            Padding="18,0" Foreground="{DynamicResource NavBtnFg}">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="6"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    
+                    <Button Name="NavUserConfigs" Content="Configure" Height="34" Margin="2,0" 
+                            Background="Transparent" BorderThickness="0" FontSize="13" FontWeight="SemiBold"
+                            Padding="18,0" Foreground="{DynamicResource NavBtnFg}">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="6"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
 
-                <Border Width="1" Height="24" Margin="10,0,10,0" Background="{DynamicResource SeparatorBg}" />
+                    <Button Name="NavAdvancedTools" Content="Tools" Height="34" Margin="2,0" 
+                            Background="Transparent" BorderThickness="0" FontSize="13" FontWeight="SemiBold"
+                            Padding="18,0" Foreground="{DynamicResource NavBtnFg}">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="6"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
 
-                <Button Name="BtnToggleTheme" Content="🌓 Theme" Height="40" Margin="0,0,5,0" 
-                        Background="Transparent" BorderThickness="0" FontSize="14" FontWeight="SemiBold"
-                        Padding="15,0" Foreground="{DynamicResource NavBtnFg}">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="6"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-            </WrapPanel>
+                    <Button Name="NavShortcutsKreation" Content="Shortcuts" Height="34" Margin="2,0" 
+                            Background="Transparent" BorderThickness="0" FontSize="13" FontWeight="SemiBold"
+                            Padding="18,0" Foreground="{DynamicResource NavBtnFg}">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="6"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+
+                <!-- Right Utility Buttons -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Name="BtnToggleSidebar" Content="Panel" Height="30" Margin="0,0,6,0" 
+                            Background="Transparent" BorderThickness="0" FontSize="12" FontWeight="SemiBold"
+                            Padding="12,0" Foreground="{DynamicResource TextMuted}">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="6"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
+                    <Border Width="1" Height="18" Margin="4,0,10,0" Background="{DynamicResource SeparatorBg}" />
+
+                    <Button Name="BtnToggleTheme" Content="Theme" Height="30" 
+                            Background="Transparent" BorderThickness="0" FontSize="12" FontWeight="SemiBold"
+                            Padding="12,0" Foreground="{DynamicResource TextMuted}">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="6"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+            </Grid>
         </Border>
 
-        <!-- Content Area which contains Context Side Panel + Main Container -->
+        <!-- ═══ Content Area (Sidebar + Main) ═══ -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="220" />
+                <ColumnDefinition Name="SidebarColumn" Width="230" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <!-- Dynamic Side Panel -->
-            <Border Grid.Column="0" Background="{DynamicResource SidebarBg}" BorderBrush="{DynamicResource SidebarBorder}" BorderThickness="0,0,1,0">
-                <Grid Margin="15,20,15,20">
-                    <!-- Default Side Panel Placeholder -->
+            <!-- ─── Side Panel ─── -->
+            <Border Name="SidebarBorder" Grid.Column="0" Background="{DynamicResource SidebarBg}" BorderBrush="{DynamicResource SidebarBorder}" BorderThickness="0,0,1,0">
+                <Grid Margin="18,20,18,20">
+                    <!-- Default Side Panel -->
                     <StackPanel Name="SidePanelDefault" Visibility="Visible">
-                        <TextBlock Text="Options" FontWeight="Bold" FontSize="18" Margin="0,0,0,20" Foreground="{DynamicResource TextHeader}" />
-                        <TextBlock Text="Reserved for current and future tab-specific options." FontSize="14" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap" />
+                        <TextBlock Text="Quick Info" FontWeight="Bold" FontSize="16" Margin="0,0,0,15" Foreground="{DynamicResource TextHeader}" />
+                        <TextBlock Text="Select a tab to see context-specific options." FontSize="13" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap" />
                     </StackPanel>
 
-                    <!-- Install Software Side Panel -->
+                    <!-- Install/Apps Side Panel -->
                     <StackPanel Name="SidePanelInstall" Visibility="Collapsed">
-                        <TextBlock Text="Configuration" FontWeight="Bold" FontSize="18" Margin="0,0,0,15" Foreground="{DynamicResource TextHeader}" />
+                        <TextBlock Text="App Settings" FontWeight="Bold" FontSize="16" Margin="0,0,0,12" Foreground="{DynamicResource TextHeader}" />
                         
-                        <TextBlock Text="Package Manager" FontWeight="SemiBold" FontSize="14" Margin="0,0,0,8" Foreground="{DynamicResource TextLabel}"/>
-                        <Button Name="BtnInstallScoop" Content="Install Scoop" Height="35" Background="#E0E7FF" Foreground="#4338CA" BorderThickness="0" FontWeight="SemiBold" Margin="0,0,0,15">
+                        <!-- Package Manager -->
+                        <TextBlock Text="PACKAGE MANAGER" FontWeight="Bold" FontSize="10" Margin="0,0,0,6" Foreground="{DynamicResource TextMuted}" />
+                        <Button Name="BtnInstallScoop" Content="Install Scoop" Height="32" Background="#E0E7FF" Foreground="#4338CA" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,15">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="4"/>
@@ -119,14 +152,15 @@ Add-Type -AssemblyName System.Windows.Forms
                             </Button.Resources>
                         </Button>
                         
-                        <TextBlock Text="Scoop Buckets" FontWeight="SemiBold" FontSize="14" Margin="0,0,0,8" Foreground="{DynamicResource TextLabel}"/>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="250" Margin="0,0,0,15">
+                        <!-- Scoop Buckets -->
+                        <TextBlock Text="BUCKETS" FontWeight="Bold" FontSize="10" Margin="0,0,0,6" Foreground="{DynamicResource TextMuted}" />
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="200" Margin="0,0,0,12">
                             <WrapPanel Name="BucketListPanel" Orientation="Horizontal" Margin="0">
                                 <WrapPanel.Resources>
                                     <Style TargetType="{x:Type ToggleButton}">
-                                        <Setter Property="Margin" Value="0,0,6,8"/>
-                                        <Setter Property="Padding" Value="8,4"/>
-                                        <Setter Property="FontSize" Value="12"/>
+                                        <Setter Property="Margin" Value="0,0,4,6"/>
+                                        <Setter Property="Padding" Value="6,3"/>
+                                        <Setter Property="FontSize" Value="11"/>
                                         <Setter Property="FontWeight" Value="SemiBold"/>
                                         <Setter Property="BorderThickness" Value="0"/>
                                         <Setter Property="Background" Value="#E5E7EB"/>
@@ -168,8 +202,16 @@ Add-Type -AssemblyName System.Windows.Forms
                             </WrapPanel>
                         </ScrollViewer>
 
-                        <TextBlock Text="App Selection" FontWeight="SemiBold" FontSize="14" Margin="0,0,0,8" Foreground="{DynamicResource TextLabel}"/>
-                        <Button Name="BtnDeselectAll" Content="Deselect All Apps" Height="35" Background="#FEE2E2" Foreground="#991B1B" BorderThickness="0" FontWeight="SemiBold" Margin="0,0,0,15">
+                        <!-- Selection Controls -->
+                        <TextBlock Text="SELECTION" FontWeight="Bold" FontSize="10" Margin="0,0,0,6" Foreground="{DynamicResource TextMuted}" />
+                        <Button Name="BtnSelectAll" Content="Select All" Height="30" Background="#D1FAE5" Foreground="#065F46" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,4">
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="4"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button Name="BtnDeselectAll" Content="Deselect All" Height="30" Background="#FEE2E2" Foreground="#991B1B" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,15">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="4"/>
@@ -177,47 +219,47 @@ Add-Type -AssemblyName System.Windows.Forms
                             </Button.Resources>
                         </Button>
 
-                        <TextBlock Text="Legend" FontWeight="SemiBold" FontSize="14" Margin="0,0,0,10" Foreground="{DynamicResource TextLabel}"/>
-                        <StackPanel Margin="5,0,0,0">
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                                <TextBlock Text="■" Foreground="#059669" FontWeight="SemiBold" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="Official Bucket App" FontWeight="SemiBold" Foreground="{DynamicResource TextBody}" VerticalAlignment="Center"/>
+                        <!-- Legend -->
+                        <TextBlock Text="LEGEND" FontWeight="Bold" FontSize="10" Margin="0,0,0,8" Foreground="{DynamicResource TextMuted}" />
+                        <StackPanel Margin="2,0,0,0">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                <Border Width="10" Height="10" CornerRadius="2" Background="#059669" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Official Bucket" FontSize="12" Foreground="{DynamicResource TextBody}" VerticalAlignment="Center"/>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                                <TextBlock Text="■" Foreground="#2563EB" FontWeight="SemiBold" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="Community Bucket App" FontWeight="SemiBold" Foreground="{DynamicResource TextBody}" VerticalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                <Border Width="10" Height="10" CornerRadius="2" Background="#2563EB" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Community Bucket" FontSize="12" Foreground="{DynamicResource TextBody}" VerticalAlignment="Center"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="■" Foreground="#9CA3AF" FontWeight="SemiBold" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="Upcoming App" FontWeight="SemiBold" Foreground="{DynamicResource TextBody}" VerticalAlignment="Center"/>
+                                <Border Width="10" Height="10" CornerRadius="2" Background="#94A3B8" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Upcoming" FontSize="12" Foreground="{DynamicResource TextBody}" VerticalAlignment="Center"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
 
-                    <!-- Shortkuts Side Panel -->
+                    <!-- Shortcuts Side Panel -->
                     <StackPanel Name="SidePanelShortcuts" Visibility="Collapsed">
-                        <TextBlock Text="Shortkuts Options" FontWeight="Bold" FontSize="18" Margin="0,0,0,15" Foreground="{DynamicResource TextHeader}" />
+                        <TextBlock Text="Options" FontWeight="Bold" FontSize="16" Margin="0,0,0,12" Foreground="{DynamicResource TextHeader}" />
                         
-                        <TextBlock Text="Launcher Target" FontWeight="SemiBold" FontSize="14" Margin="0,0,0,8" Foreground="{DynamicResource TextLabel}"/>
+                        <TextBlock Text="SHELL TARGET" FontWeight="Bold" FontSize="10" Margin="0,0,0,6" Foreground="{DynamicResource TextMuted}" />
                         <StackPanel Margin="0,0,0,15">
-                            <RadioButton Name="RbShellPowershell" Content="powershell" IsChecked="True" Margin="0,0,0,8" Foreground="{DynamicResource TextBody}"/>
-                            <RadioButton Name="RbShellPwsh" Content="pwsh" Margin="0,0,0,8" Foreground="{DynamicResource TextBody}"/>
-                            <RadioButton Name="RbShellCmd" Content="cmd" Margin="0,0,0,8" Foreground="{DynamicResource TextBody}"/>
+                            <RadioButton Name="RbShellPowershell" Content="powershell" IsChecked="True" Margin="0,0,0,6" Foreground="{DynamicResource TextBody}" FontSize="13"/>
+                            <RadioButton Name="RbShellPwsh" Content="pwsh" Margin="0,0,0,6" Foreground="{DynamicResource TextBody}" FontSize="13"/>
                         </StackPanel>
                     </StackPanel>
 
-                    <!-- App Version -->
-                    <TextBlock Text="Version 26.3.31" 
-                               FontSize="12" 
+                    <!-- Version -->
+                    <TextBlock Text="v26.4.11" 
+                               FontSize="11" 
                                FontWeight="Medium"
-                               Foreground="{DynamicResource TextBody}" 
+                               Foreground="{DynamicResource TextMuted}" 
                                VerticalAlignment="Bottom" 
                                HorizontalAlignment="Left" />
                 </Grid>
             </Border>
 
-            <!-- Main Content Area Dashboard -->
-            <Border Grid.Column="1" Background="{DynamicResource PanelBg}" Padding="30">
+            <!-- ─── Main Content Area ─── -->
+            <Border Grid.Column="1" Background="{DynamicResource PanelBg}" Padding="30,25,30,20">
                 <Grid Name="ContentArea">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -225,97 +267,207 @@ Add-Type -AssemblyName System.Windows.Forms
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     
-                    <TextBlock Name="MainTitle" Grid.Row="0" Text="Welcome" FontSize="28" FontWeight="Bold" Margin="0,0,0,10" Foreground="{DynamicResource TextHeader}"/>
-                    <Separator Grid.Row="1" Margin="0,0,0,20" Background="{DynamicResource SeparatorBg}" />
+                    <!-- Title Row -->
+                    <Grid Grid.Row="0" Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Name="MainTitle" Grid.Column="0" Text="Welcome" FontSize="24" FontWeight="Bold" Foreground="{DynamicResource TextHeader}" VerticalAlignment="Center"/>
+                        <TextBlock Name="SubTitle" Grid.Column="1" Text="" FontSize="13" Foreground="{DynamicResource TextMuted}" VerticalAlignment="Center"/>
+                    </Grid>
                     
-                    <!-- Install Panel -->
+                    <!-- Search Bar (visible only on Apps tab) -->
+                    <Border Name="SearchBarBorder" Grid.Row="1" Visibility="Collapsed" 
+                            CornerRadius="6" Background="{DynamicResource SearchBg}" 
+                            BorderBrush="{DynamicResource SearchBorder}" BorderThickness="1" 
+                            Margin="0,0,0,15" Padding="0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Search" FontSize="12" VerticalAlignment="Center" Margin="12,0,8,0" Foreground="{DynamicResource TextMuted}"/>
+                            <TextBox Name="SearchBox" Grid.Column="1" 
+                                     Background="Transparent" BorderThickness="0" 
+                                     FontSize="13" Padding="4,8" 
+                                     Foreground="{DynamicResource TextLabel}"
+                                     VerticalContentAlignment="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Separator (visible when search is hidden) -->
+                    <Separator Name="MainSeparator" Grid.Row="1" Margin="0,0,0,15" Background="{DynamicResource SeparatorBg}" />
+                    
+                    <!-- ═══ Apps Panel ═══ -->
                     <Grid Name="PanelInstall" Grid.Row="2" Visibility="Collapsed">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         
-                        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Margin="0,0,0,20">
+                        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Margin="0,0,0,15">
                             <WrapPanel Name="AppListPanel" Orientation="Horizontal" />
                         </ScrollViewer>
 
-                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button Name="BtnUninstallSelected" Content="Uninstall Selected" Height="40" Width="180" Background="#EF4444" Foreground="White" FontWeight="Bold" FontSize="16" BorderThickness="0" Margin="0,0,10,0" Padding="20,0">
-                                <Button.Resources>
-                                    <Style TargetType="{x:Type Border}">
-                                        <Setter Property="CornerRadius" Value="6"/>
-                                    </Style>
-                                </Button.Resources>
-                            </Button>
-                            
-                            <Button Name="BtnInstallSelected" Content="Install Selected" Height="40" Width="180" Background="#10B981" Foreground="White" FontWeight="Bold" FontSize="16" BorderThickness="0" Padding="20,0">
-                                <Button.Resources>
-                                    <Style TargetType="{x:Type Border}">
-                                        <Setter Property="CornerRadius" Value="6"/>
-                                    </Style>
-                                </Button.Resources>
-                            </Button>
-                        </StackPanel>
+                        <!-- Action Bar -->
+                        <Border Grid.Row="1" CornerRadius="8" Background="{DynamicResource SidebarBg}" Padding="15,10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Safe Actions (Left) -->
+                                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                    <Button Name="BtnInstallSelected" Content="Install Selected" Height="36" Background="#10B981" Foreground="White" FontWeight="Bold" FontSize="13" BorderThickness="0" Margin="0,0,8,0" Padding="16,0">
+                                        <Button.Resources><Style TargetType="{x:Type Border}"><Setter Property="CornerRadius" Value="6"/></Style></Button.Resources>
+                                    </Button>
+                                    <Button Name="BtnUpdateSelected" Content="Update Selected" Height="36" Background="#6366F1" Foreground="White" FontWeight="Bold" FontSize="13" BorderThickness="0" Margin="0,0,8,0" Padding="16,0">
+                                        <Button.Resources><Style TargetType="{x:Type Border}"><Setter Property="CornerRadius" Value="6"/></Style></Button.Resources>
+                                    </Button>
+                                    <Button Name="BtnUpdateAll" Content="Update All" Height="36" Background="#8B5CF6" Foreground="White" FontWeight="Bold" FontSize="13" BorderThickness="0" Padding="16,0">
+                                        <Button.Resources><Style TargetType="{x:Type Border}"><Setter Property="CornerRadius" Value="6"/></Style></Button.Resources>
+                                    </Button>
+                                </StackPanel>
+
+                                <!-- Destructive Action (Right) -->
+                                <Button Name="BtnUninstallSelected" Grid.Column="1" Content="Uninstall Selected" Height="36" Background="#FEE2E2" Foreground="#991B1B" FontWeight="Bold" FontSize="13" BorderThickness="0" Padding="16,0">
+                                    <Button.Resources><Style TargetType="{x:Type Border}"><Setter Property="CornerRadius" Value="6"/></Style></Button.Resources>
+                                </Button>
+                            </Grid>
+                        </Border>
                     </Grid>
 
-                    <!-- User Configs Panel -->
-                    <StackPanel Name="PanelUserConfigs" Grid.Row="2" Visibility="Collapsed">
-                        <TextBlock Text="Import and Export User Configurations." 
-                                   FontSize="15" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap" Margin="0,0,0,20"/>
-                        
-                        <Button Name="BtnRunGlazeWMKonfig" Content="Run GlazeWM Konfig" Height="40" Width="280" Background="#8B5CF6" Foreground="White" FontWeight="Bold" FontSize="14" BorderThickness="0" HorizontalAlignment="Left" Padding="10,0">
-                            <Button.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="6"/>
-                                </Style>
-                            </Button.Resources>
-                        </Button>
-                    </StackPanel>
+                    <!-- ═══ Configure Panel ═══ -->
+                    <ScrollViewer Name="PanelUserConfigs" Grid.Row="2" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <TextBlock Text="Configuration tools for installed applications." 
+                                       FontSize="14" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap" Margin="0,0,0,20"/>
+                            
+                            <!-- GlazeWM Card -->
+                            <Border CornerRadius="8" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" Background="{DynamicResource CardBg}" Padding="20" Margin="0,0,0,12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                        <TextBlock Text="GlazeWM Configurator" FontWeight="Bold" FontSize="15" Foreground="{DynamicResource TextHeader}" Margin="0,0,0,4"/>
+                                        <TextBlock Text="Launch the GUI configurator for GlazeWM tiling window manager. Edit keybindings, gaps, rules, and more." 
+                                                   FontSize="13" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                    <Button Name="BtnRunGlazeWMKonfig" Grid.Column="1" Content="Launch" Height="36" Width="100" 
+                                            Background="#8B5CF6" Foreground="White" FontWeight="Bold" FontSize="13" BorderThickness="0" VerticalAlignment="Center">
+                                        <Button.Resources><Style TargetType="{x:Type Border}"><Setter Property="CornerRadius" Value="6"/></Style></Button.Resources>
+                                    </Button>
+                                </Grid>
+                            </Border>
 
-                    <!-- Advanced Tools Panel -->
+                            <!-- Placeholder -->
+                            <Border CornerRadius="8" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" Background="{DynamicResource CardBg}" Padding="20" Margin="0,0,0,12" Opacity="0.5">
+                                <StackPanel>
+                                    <TextBlock Text="More configurators coming soon..." FontWeight="SemiBold" FontSize="14" Foreground="{DynamicResource TextMuted}"/>
+                                    <TextBlock Text="PowerShell profile, Windows Terminal, and more." FontSize="13" Foreground="{DynamicResource TextMuted}" Margin="0,4,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <!-- ═══ Tools Panel ═══ -->
                     <Grid Name="PanelAdvancedTools" Grid.Row="2" Visibility="Collapsed">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         
-                        <TextBlock Grid.Row="0" Text="Useful Configuration and Tools" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,10" Foreground="{DynamicResource TextLabel}"/>
+                        <TextBlock Grid.Row="0" Text="Install and manage development tools and services." FontSize="14" Foreground="{DynamicResource TextBody}" Margin="0,0,0,15"/>
                         
-                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,20">
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                             <WrapPanel Name="AdvancedListPanel" Orientation="Horizontal" />
                         </ScrollViewer>
                     </Grid>
                     
-                    <!-- Shortcuts Kreation Panel -->
-                    <StackPanel Name="PanelShortcutsKreation" Grid.Row="2" Visibility="Collapsed">
-                        <TextBlock Text="Create and manage desktop or start menu shortcuts." 
-                                   FontSize="15" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap" Margin="0,0,0,20"/>
-                        
-                        <Button Name="BtnCreateMainShortcut" Content="Create Setup Utility Shortcut (.lnk)" Height="40" Width="280" Background="#3B82F6" Foreground="White" FontWeight="Bold" FontSize="14" BorderThickness="0" HorizontalAlignment="Left" Padding="10,0" Margin="0,0,0,10">
-                            <Button.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="6"/>
-                                </Style>
-                            </Button.Resources>
-                        </Button>
-                        
-                        <Button Name="BtnCreateGlazeWMShortcut" Content="Create GlazeWM Konfig Shortcut (.lnk)" Height="40" Width="280" Background="#8B5CF6" Foreground="White" FontWeight="Bold" FontSize="14" BorderThickness="0" HorizontalAlignment="Left" Padding="10,0">
-                            <Button.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="6"/>
-                                </Style>
-                            </Button.Resources>
-                        </Button>
-                    </StackPanel>
+                    <!-- ═══ Shortcuts Panel ═══ -->
+                    <ScrollViewer Name="PanelShortcutsKreation" Grid.Row="2" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <TextBlock Text="Create desktop shortcuts for quick access to tools." 
+                                       FontSize="14" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap" Margin="0,0,0,20"/>
+                            
+                            <!-- Setup Utility Shortcut Card -->
+                            <Border CornerRadius="8" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" Background="{DynamicResource CardBg}" Padding="20" Margin="0,0,0,12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                        <TextBlock Text="Windows Setup Utility" FontWeight="Bold" FontSize="15" Foreground="{DynamicResource TextHeader}" Margin="0,0,0,4"/>
+                                        <TextBlock Text="Create a desktop shortcut (.lnk) to launch this setup utility directly from GitHub." 
+                                                   FontSize="13" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                    <Button Name="BtnCreateMainShortcut" Grid.Column="1" Content="Create Shortcut" Height="36" Width="130" 
+                                            Background="#3B82F6" Foreground="White" FontWeight="Bold" FontSize="13" BorderThickness="0" VerticalAlignment="Center">
+                                        <Button.Resources><Style TargetType="{x:Type Border}"><Setter Property="CornerRadius" Value="6"/></Style></Button.Resources>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                            
+                            <!-- GlazeWM Shortcut Card -->
+                            <Border CornerRadius="8" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" Background="{DynamicResource CardBg}" Padding="20" Margin="0,0,0,12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                        <TextBlock Text="GlazeWM Configurator" FontWeight="Bold" FontSize="15" Foreground="{DynamicResource TextHeader}" Margin="0,0,0,4"/>
+                                        <TextBlock Text="Create a desktop shortcut (.lnk) for the GlazeWM configuration tool." 
+                                                   FontSize="13" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                    <Button Name="BtnCreateGlazeWMShortcut" Grid.Column="1" Content="Create Shortcut" Height="36" Width="130" 
+                                            Background="#8B5CF6" Foreground="White" FontWeight="Bold" FontSize="13" BorderThickness="0" VerticalAlignment="Center">
+                                        <Button.Resources><Style TargetType="{x:Type Border}"><Setter Property="CornerRadius" Value="6"/></Style></Button.Resources>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
                     
-                    <!-- Welcome/Home Panel -->
+                    <!-- ═══ Welcome/Home Panel ═══ -->
                     <StackPanel Name="PanelWelcome" Grid.Row="2" Visibility="Visible">
-                        <TextBlock Text="Select an option from the top navigation menu to begin customizing your Windows installation." 
-                                   FontSize="15" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap"/>
+                        <TextBlock Text="Get started by selecting a tab from the navigation above." 
+                                   FontSize="14" Foreground="{DynamicResource TextBody}" TextWrapping="Wrap" Margin="0,0,0,25"/>
+                        
+                        <!-- System Info Cards -->
+                        <WrapPanel Name="DashboardPanel" Orientation="Horizontal" Margin="0,0,0,20"/>
+                        
+                        <!-- Quick Actions -->
+                        <TextBlock Text="QUICK ACTIONS" FontWeight="Bold" FontSize="11" Foreground="{DynamicResource TextMuted}" Margin="0,10,0,12"/>
+                        <WrapPanel Orientation="Horizontal">
+                            <Button Name="BtnQuickApps" Content="Browse Apps" Height="36" Background="#E0E7FF" Foreground="#4338CA" FontWeight="SemiBold" FontSize="13" BorderThickness="0" Margin="0,0,8,8" Padding="18,0">
+                                <Button.Resources><Style TargetType="{x:Type Border}"><Setter Property="CornerRadius" Value="6"/></Style></Button.Resources>
+                            </Button>
+                            <Button Name="BtnQuickTools" Content="Setup Tools" Height="36" Background="#ECFDF5" Foreground="#065F46" FontWeight="SemiBold" FontSize="13" BorderThickness="0" Margin="0,0,8,8" Padding="18,0">
+                                <Button.Resources><Style TargetType="{x:Type Border}"><Setter Property="CornerRadius" Value="6"/></Style></Button.Resources>
+                            </Button>
+                        </WrapPanel>
                     </StackPanel>
                 </Grid>
             </Border>
         </Grid>
+
+        <!-- ═══ Status Bar ═══ -->
+        <Border Grid.Row="2" Background="{DynamicResource StatusBarBg}" BorderBrush="{DynamicResource SidebarBorder}" BorderThickness="0,1,0,0" Padding="20,6">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Name="StatusBarText" Grid.Column="0" Text="Ready" FontSize="12" Foreground="{DynamicResource TextMuted}" VerticalAlignment="Center"/>
+                <TextBlock Name="StatusBarRight" Grid.Column="1" Text="" FontSize="11" Foreground="{DynamicResource TextMuted}" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
     </Grid>
 </Window>
 "@
@@ -338,6 +490,7 @@ $NavAdvancedTools = $Form.FindName("NavAdvancedTools")
 $NavShortcutsKreation = $Form.FindName("NavShortcutsKreation")
 $BtnToggleTheme = $Form.FindName("BtnToggleTheme")
 $MainTitle = $Form.FindName("MainTitle")
+$SubTitle = $Form.FindName("SubTitle")
 
 $PanelInstall = $Form.FindName("PanelInstall")
 $PanelUserConfigs = $Form.FindName("PanelUserConfigs")
@@ -353,14 +506,139 @@ $BtnCreateGlazeWMShortcut = $Form.FindName("BtnCreateGlazeWMShortcut")
 $BtnRunGlazeWMKonfig = $Form.FindName("BtnRunGlazeWMKonfig")
 $RbShellPowershell = $Form.FindName("RbShellPowershell")
 $RbShellPwsh = $Form.FindName("RbShellPwsh")
-$RbShellCmd = $Form.FindName("RbShellCmd")
 $BtnInstallScoop = $Form.FindName("BtnInstallScoop")
 
 $AppListPanel = $Form.FindName("AppListPanel")
 $AdvancedListPanel = $Form.FindName("AdvancedListPanel")
 $BtnInstallSelected = $Form.FindName("BtnInstallSelected")
 $BtnUninstallSelected = $Form.FindName("BtnUninstallSelected")
+$BtnUpdateSelected = $Form.FindName("BtnUpdateSelected")
+$BtnUpdateAll = $Form.FindName("BtnUpdateAll")
 $BtnDeselectAll = $Form.FindName("BtnDeselectAll")
+$BtnSelectAll = $Form.FindName("BtnSelectAll")
+
+# New UI elements
+$SearchBox = $Form.FindName("SearchBox")
+$SearchBarBorder = $Form.FindName("SearchBarBorder")
+$MainSeparator = $Form.FindName("MainSeparator")
+$StatusBarText = $Form.FindName("StatusBarText")
+$StatusBarRight = $Form.FindName("StatusBarRight")
+$DashboardPanel = $Form.FindName("DashboardPanel")
+$BtnQuickApps = $Form.FindName("BtnQuickApps")
+$BtnQuickTools = $Form.FindName("BtnQuickTools")
+
+# ── Status Bar Info ───────────────────────────────────────────────────────
+$StatusBarRight.Text = "$env:COMPUTERNAME | PowerShell $($PSVersionTable.PSVersion.Major).$($PSVersionTable.PSVersion.Minor)"
+
+# ── Dashboard Info Cards ──────────────────────────────────────────────────
+function New-InfoCard {
+    param([string]$Label, [string]$Value)
+    $card = New-Object System.Windows.Controls.Border
+    $card.CornerRadius = [System.Windows.CornerRadius]::new(8)
+    $card.Padding = [System.Windows.Thickness]::new(18, 14, 18, 14)
+    $card.Margin = [System.Windows.Thickness]::new(0, 0, 12, 12)
+    $card.MinWidth = 160
+    $card.SetResourceReference([System.Windows.Controls.Border]::BorderBrushProperty, "CardBorder")
+    $card.BorderThickness = [System.Windows.Thickness]::new(1)
+    $card.SetResourceReference([System.Windows.Controls.Border]::BackgroundProperty, "CardBg")
+    
+    $stack = New-Object System.Windows.Controls.StackPanel
+    
+    $labelTb = New-Object System.Windows.Controls.TextBlock
+    $labelTb.Text = $Label
+    $labelTb.FontSize = 11
+    $labelTb.FontWeight = "Bold"
+    $labelTb.SetResourceReference([System.Windows.Controls.TextBlock]::ForegroundProperty, "TextMuted")
+    $labelTb.Margin = [System.Windows.Thickness]::new(0, 0, 0, 4)
+    
+    $valueTb = New-Object System.Windows.Controls.TextBlock
+    $valueTb.Text = $Value
+    $valueTb.FontSize = 16
+    $valueTb.FontWeight = "Bold"
+    $valueTb.SetResourceReference([System.Windows.Controls.TextBlock]::ForegroundProperty, "TextHeader")
+    
+    $stack.Children.Add($labelTb) | Out-Null
+    $stack.Children.Add($valueTb) | Out-Null
+    $card.Child = $stack
+    
+    return $card
+}
+
+$hostname = $env:COMPUTERNAME
+$osCaption = try { (Get-CimInstance -ClassName Win32_OperatingSystem -ErrorAction Stop).Caption -replace 'Microsoft ', '' } catch { "Windows" }
+$scoopStatus = if (Get-Command scoop -ErrorAction SilentlyContinue) { "Installed" } else { "Not Found" }
+
+$DashboardPanel.Children.Add((New-InfoCard -Label "HOSTNAME" -Value $hostname)) | Out-Null
+$DashboardPanel.Children.Add((New-InfoCard -Label "OS" -Value $osCaption)) | Out-Null
+$DashboardPanel.Children.Add((New-InfoCard -Label "SCOOP" -Value $scoopStatus)) | Out-Null
+
+# ── Fuzzy Match Function ──────────────────────────────────────────────────
+# Subsequence match: all query chars must appear in order within target.
+# E.g. "firf" matches "Firefox", "vsc" matches "Visual Studio Code"
+function Test-FuzzyMatch {
+    param([string]$Text, [string]$Query)
+    # Exact substring = always match
+    if ($Text.Contains($Query)) { return $true }
+    # Subsequence check
+    $ti = 0
+    for ($qi = 0; $qi -lt $Query.Length; $qi++) {
+        $found = $false
+        while ($ti -lt $Text.Length) {
+            if ($Text[$ti] -eq $Query[$qi]) { $ti++; $found = $true; break }
+            $ti++
+        }
+        if (-not $found) { return $false }
+    }
+    return $true
+}
+
+# ── Search Handler ────────────────────────────────────────────────────────
+$SearchBox.Add_TextChanged({
+    $query = $SearchBox.Text.Trim().ToLower()
+    foreach ($group in $AppListPanel.Children) {
+        if ($group -isnot [System.Windows.Controls.StackPanel]) { continue }
+        if ([string]::IsNullOrEmpty($query)) {
+            $group.Visibility = "Visible"
+            foreach ($child in $group.Children) { $child.Visibility = "Visible" }
+            continue
+        }
+        
+        $anyMatch = $false
+        foreach ($child in $group.Children) {
+            # Category header (first TextBlock) — handle separately after loop
+            if ($child -is [System.Windows.Controls.TextBlock] -and $child.FontWeight.ToString() -eq "SemiBold") {
+                continue
+            }
+            $text = ""
+            if ($child -is [System.Windows.Controls.CheckBox]) { $text = $child.Content.ToString() }
+            elseif ($child -is [System.Windows.Controls.TextBlock]) { $text = $child.Text }
+            
+            if (-not [string]::IsNullOrEmpty($text) -and (Test-FuzzyMatch -Text $text.ToLower() -Query $query)) {
+                $child.Visibility = "Visible"
+                $anyMatch = $true
+            } else {
+                $child.Visibility = "Collapsed"
+            }
+        }
+        # Show/hide entire group (including header) based on whether any child matched
+        $group.Visibility = if ($anyMatch) { "Visible" } else { "Collapsed" }
+        # Keep header visible when group has matches
+        if ($anyMatch) {
+            foreach ($child in $group.Children) {
+                if ($child -is [System.Windows.Controls.TextBlock] -and $child.FontWeight.ToString() -eq "SemiBold") {
+                    $child.Visibility = "Visible"
+                }
+            }
+        }
+    }
+})
+
+# ── Select All Handler ────────────────────────────────────────────────────
+$BtnSelectAll.Add_Click({
+    foreach ($cb in $global:AppCheckboxes) {
+        if ($cb.IsEnabled) { $cb.IsChecked = $true }
+    }
+})
 
 # Advanced Config Install Handler
 function global:Invoke-AdvancedInstall {
@@ -1189,31 +1467,43 @@ $global:IsDarkMode = $false
 function Set-AppTheme {
     param([bool]$Dark)
     if ($Dark) {
-        # Switch to Dark
-        $Form.Resources["WindowBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#111827"))
-        $Form.Resources["SidebarBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#1F2937"))
-        $Form.Resources["SidebarBorder"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#374151"))
-        $Form.Resources["PanelBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#111827"))
-        $Form.Resources["TextHeader"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#F9FAFB"))
-        $Form.Resources["TextLabel"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#E5E7EB"))
-        $Form.Resources["TextBody"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#D1D5DB"))
-        $Form.Resources["NavBtnFg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#F3F4F6"))
-        $Form.Resources["NavBtnActiveBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#374151"))
-        $Form.Resources["SeparatorBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#374151"))
+        # Switch to Dark (Slate dark palette)
+        $Form.Resources["WindowBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#0F172A"))
+        $Form.Resources["SidebarBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#1E293B"))
+        $Form.Resources["SidebarBorder"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#334155"))
+        $Form.Resources["PanelBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#0F172A"))
+        $Form.Resources["CardBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#1E293B"))
+        $Form.Resources["CardBorder"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#334155"))
+        $Form.Resources["TextHeader"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#F8FAFC"))
+        $Form.Resources["TextLabel"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#E2E8F0"))
+        $Form.Resources["TextBody"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#CBD5E1"))
+        $Form.Resources["TextMuted"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#64748B"))
+        $Form.Resources["NavBtnFg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#E2E8F0"))
+        $Form.Resources["NavBtnActiveBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#334155"))
+        $Form.Resources["SeparatorBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#334155"))
+        $Form.Resources["StatusBarBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#1E293B"))
+        $Form.Resources["SearchBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#1E293B"))
+        $Form.Resources["SearchBorder"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#475569"))
         $global:IsDarkMode = $true
     }
     else {
-        # Switch to Light
-        $Form.Resources["WindowBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#F9FAFB"))
-        $Form.Resources["SidebarBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#F3F4F6"))
-        $Form.Resources["SidebarBorder"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#E5E7EB"))
+        # Switch to Light (Slate light palette)
+        $Form.Resources["WindowBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#F8FAFC"))
+        $Form.Resources["SidebarBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#F1F5F9"))
+        $Form.Resources["SidebarBorder"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#E2E8F0"))
         $Form.Resources["PanelBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("White"))
-        $Form.Resources["TextHeader"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#111827"))
-        $Form.Resources["TextLabel"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#374151"))
-        $Form.Resources["TextBody"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#4B5563"))
-        $Form.Resources["NavBtnFg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#1F2937"))
-        $Form.Resources["NavBtnActiveBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#E5E7EB"))
-        $Form.Resources["SeparatorBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#E5E7EB"))
+        $Form.Resources["CardBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#F8FAFC"))
+        $Form.Resources["CardBorder"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#E2E8F0"))
+        $Form.Resources["TextHeader"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#0F172A"))
+        $Form.Resources["TextLabel"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#334155"))
+        $Form.Resources["TextBody"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#475569"))
+        $Form.Resources["TextMuted"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#94A3B8"))
+        $Form.Resources["NavBtnFg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#334155"))
+        $Form.Resources["NavBtnActiveBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#E2E8F0"))
+        $Form.Resources["SeparatorBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#E2E8F0"))
+        $Form.Resources["StatusBarBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#F1F5F9"))
+        $Form.Resources["SearchBg"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#F1F5F9"))
+        $Form.Resources["SearchBorder"] = [System.Windows.Media.SolidColorBrush]::new([System.Windows.Media.ColorConverter]::ConvertFromString("#CBD5E1"))
         $global:IsDarkMode = $false
     }
 }
@@ -1233,6 +1523,24 @@ $BtnToggleTheme.Add_Click({
         Set-AppTheme -Dark (-not $global:IsDarkMode)
     })
 
+# Sidebar Toggle Logic
+$BtnToggleSidebar = $Form.FindName("BtnToggleSidebar")
+$SidebarBorderEl = $Form.FindName("SidebarBorder")
+$SidebarColumnDef = $Form.FindName("SidebarColumn")
+$global:SidebarVisible = $true
+
+$BtnToggleSidebar.Add_Click({
+        if ($global:SidebarVisible) {
+            $SidebarBorderEl.Visibility = "Collapsed"
+            $SidebarColumnDef.Width = [System.Windows.GridLength]::new(0)
+            $global:SidebarVisible = $false
+        } else {
+            $SidebarBorderEl.Visibility = "Visible"
+            $SidebarColumnDef.Width = [System.Windows.GridLength]::new(230)
+            $global:SidebarVisible = $true
+        }
+    })
+
 # Helper to hide all panels
 function Hide-AllPanels {
     $PanelInstall.Visibility = "Collapsed"
@@ -1243,6 +1551,9 @@ function Hide-AllPanels {
     $SidePanelDefault.Visibility = "Collapsed"
     $SidePanelInstall.Visibility = "Collapsed"
     $SidePanelShortcuts.Visibility = "Collapsed"
+    $SearchBarBorder.Visibility = "Collapsed"
+    $MainSeparator.Visibility = "Visible"
+    $SubTitle.Text = ""
 }
 
 # Highlight Selected Menu Helper Function
@@ -1258,15 +1569,18 @@ function Set-MenuHighlight {
 # Event Handlers for Navigation
 $NavInstall.Add_Click({
         Set-MenuHighlight $NavInstall
-        $MainTitle.Text = "Install"
+        $MainTitle.Text = "Apps"
+        $SubTitle.Text = "$(@($global:AppCheckboxes).Count) apps available"
         Hide-AllPanels
         $PanelInstall.Visibility = "Visible"
         $SidePanelInstall.Visibility = "Visible"
+        $SearchBarBorder.Visibility = "Visible"
+        $MainSeparator.Visibility = "Collapsed"
     })
 
 $NavUserConfigs.Add_Click({
         Set-MenuHighlight $NavUserConfigs
-        $MainTitle.Text = "Konfigs"
+        $MainTitle.Text = "Configure"
         Hide-AllPanels
         $PanelUserConfigs.Visibility = "Visible"
         $SidePanelDefault.Visibility = "Visible"
@@ -1274,7 +1588,7 @@ $NavUserConfigs.Add_Click({
 
 $NavAdvancedTools.Add_Click({
         Set-MenuHighlight $NavAdvancedTools
-        $MainTitle.Text = "Useful Tools"
+        $MainTitle.Text = "Tools"
         Hide-AllPanels
         $PanelAdvancedTools.Visibility = "Visible"
         $SidePanelDefault.Visibility = "Visible"
@@ -1282,10 +1596,30 @@ $NavAdvancedTools.Add_Click({
 
 $NavShortcutsKreation.Add_Click({
         Set-MenuHighlight $NavShortcutsKreation
-        $MainTitle.Text = "Shortkuts"
+        $MainTitle.Text = "Shortcuts"
         Hide-AllPanels
         $PanelShortcutsKreation.Visibility = "Visible"
         $SidePanelShortcuts.Visibility = "Visible"
+    })
+
+# Quick Action Buttons (Welcome page)
+$BtnQuickApps.Add_Click({
+        Set-MenuHighlight $NavInstall
+        $MainTitle.Text = "Apps"
+        $SubTitle.Text = "$(@($global:AppCheckboxes).Count) apps available"
+        Hide-AllPanels
+        $PanelInstall.Visibility = "Visible"
+        $SidePanelInstall.Visibility = "Visible"
+        $SearchBarBorder.Visibility = "Visible"
+        $MainSeparator.Visibility = "Collapsed"
+    })
+
+$BtnQuickTools.Add_Click({
+        Set-MenuHighlight $NavAdvancedTools
+        $MainTitle.Text = "Tools"
+        Hide-AllPanels
+        $PanelAdvancedTools.Visibility = "Visible"
+        $SidePanelDefault.Visibility = "Visible"
     })
 
 $BtnInstallScoop.Add_Click({
@@ -1401,10 +1735,57 @@ $BtnInstallSelected.Add_Click({
             }
         }
 
-
-
         $BtnInstallSelected.Content = "Install Selected"
         $BtnInstallSelected.IsEnabled = $true
+    })
+
+$BtnUpdateSelected.Add_Click({
+        $BtnUpdateSelected.Content = "Updating..."
+        $BtnUpdateSelected.IsEnabled = $false
+        [System.Windows.Forms.Application]::DoEvents()
+
+        # Gather selected scoop apps
+        $scoopApps = @()
+
+        foreach ($cb in $global:AppCheckboxes) {
+            if ($cb.IsChecked) {
+                $appData = $cb.Tag
+                if ($appData.type -eq "scoop") {
+                    # Extract app name from bucket/app format
+                    $appId = $appData.id
+                    if ($appId -match '/') {
+                        $appId = $appId.Split('/')[1]
+                    }
+                    $scoopApps += $appId
+                }
+            }
+        }
+
+        if ($scoopApps.Count -gt 0) {
+            foreach ($app in $scoopApps) {
+                Write-Host "Updating Scoop app: $app" -ForegroundColor Cyan
+                Invoke-Expression "scoop update $app"
+            }
+        }
+        else {
+            Write-Host "No scoop apps selected to update." -ForegroundColor Yellow
+        }
+
+        $BtnUpdateSelected.Content = "Update Selected"
+        $BtnUpdateSelected.IsEnabled = $true
+    })
+
+$BtnUpdateAll.Add_Click({
+        $BtnUpdateAll.Content = "Updating All..."
+        $BtnUpdateAll.IsEnabled = $false
+        [System.Windows.Forms.Application]::DoEvents()
+
+        Write-Host "Updating all Scoop apps..." -ForegroundColor Cyan
+        Invoke-Expression "scoop update --all"
+        Write-Host "All Scoop apps updated." -ForegroundColor Green
+
+        $BtnUpdateAll.Content = "Update All"
+        $BtnUpdateAll.IsEnabled = $true
     })
 
 function New-ShortcutLink {
@@ -1417,37 +1798,29 @@ function New-ShortcutLink {
     $baseShell = "powershell.exe"
     if ($RbShellPwsh.IsChecked) { $baseShell = "pwsh.exe" }
     
-    $scriptMode = "ps1"
-    if ($RbShellCmd.IsChecked) { $scriptMode = "cmd" }
-    
     $appDataPath = Join-Path $env:LOCALAPPDATA "WindowsSetupUtility"
     if (-not (Test-Path $appDataPath)) { New-Item -ItemType Directory -Path $appDataPath -Force | Out-Null }
     
+    $innerCmd = "irm $IrmUrl | iex"
+    $adminArg = if ($RequiresAdmin) { " -Verb RunAs" } else { "" }
+    
+    $launcherPath = Join-Path $appDataPath "$($FileNameBase).ps1"
+    $launcherContent = "Start-Process $baseShell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -Command `"$innerCmd`"'$adminArg"
+    Set-Content -Path $launcherPath -Value $launcherContent -Force
+    
     $WshShell = New-Object -ComObject WScript.Shell
     $Shortcut = $WshShell.CreateShortcut($ShortcutPath)
-
-    $adminArg = if ($RequiresAdmin) { "-Verb RunAs" } else { "" }
-    $argsList = "'-NoProfile -ExecutionPolicy Bypass -Command `"irm $IrmUrl | iex`"'"
-
-    if ($scriptMode -eq "cmd") {
-        $launcherPath = Join-Path $appDataPath "$($FileNameBase).cmd"
-        $launcherContent = "@echo off`r`npowershell.exe -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -Command `"Start-Process $baseShell -ArgumentList $argsList $adminArg`""
-        Set-Content -Path $launcherPath -Value $launcherContent -Force
-        
-        $Shortcut.TargetPath = "cmd.exe"
-        $Shortcut.Arguments = "/c `"$launcherPath`""
-        $Shortcut.IconLocation = "cmd.exe,0"
-    } else {
-        $launcherPath = Join-Path $appDataPath "$($FileNameBase).ps1"
-        $launcherContent = "Start-Process $baseShell -ArgumentList $argsList $adminArg"
-        Set-Content -Path $launcherPath -Value $launcherContent -Force
-        
-        $Shortcut.TargetPath = "$baseShell"
-        $Shortcut.Arguments = "-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$launcherPath`""
-        $Shortcut.IconLocation = "$baseShell,0"
-    }
-    
+    $Shortcut.TargetPath = "$baseShell"
+    $Shortcut.Arguments = "-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$launcherPath`""
+    $Shortcut.IconLocation = "$baseShell,0"
     $Shortcut.Save()
+    
+    # Set "Run as administrator" flag in the .lnk file (byte 0x15, bit 0x20)
+    if ($RequiresAdmin) {
+        $bytes = [System.IO.File]::ReadAllBytes($ShortcutPath)
+        $bytes[0x15] = $bytes[0x15] -bor 0x20
+        [System.IO.File]::WriteAllBytes($ShortcutPath, $bytes)
+    }
 }
 
 $BtnCreateMainShortcut.Add_Click({
@@ -1477,7 +1850,7 @@ $BtnCreateMainShortcut.Add_Click({
         $PowerShell.AddScript({
                 Start-Sleep -Seconds 2
                 $Form.Dispatcher.Invoke({
-                        $BtnCreateMainShortcut.Content = "Create Setup Utility Shortcut (.lnk)"
+                        $BtnCreateMainShortcut.Content = "Create Shortcut"
                         $BtnCreateMainShortcut.IsEnabled = $true
                     })
             }) | Out-Null
@@ -1497,7 +1870,7 @@ $BtnRunGlazeWMKonfig.Add_Click({
             $cmdArgs = '-NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/kud3n013/glazewm-konfig/main/glazewm-konfig.ps1 | iex"'
             Start-Process powershell.exe -ArgumentList $cmdArgs
             Write-Host "Started GlazeWM Konfig process." -ForegroundColor Green
-            $BtnRunGlazeWMKonfig.Content = "Configurator Launched"
+            $BtnRunGlazeWMKonfig.Content = "Launched"
         }
         catch {
             Write-Host "Failed to launch GlazeWM Konfig: $_" -ForegroundColor Red
@@ -1513,7 +1886,7 @@ $BtnRunGlazeWMKonfig.Add_Click({
         $PowerShell.AddScript({
                 Start-Sleep -Seconds 2
                 $Form.Dispatcher.Invoke({
-                        $BtnRunGlazeWMKonfig.Content = "Run GlazeWM Konfig"
+                        $BtnRunGlazeWMKonfig.Content = "Launch"
                         $BtnRunGlazeWMKonfig.IsEnabled = $true
                     })
             }) | Out-Null
@@ -1530,7 +1903,7 @@ $BtnCreateGlazeWMShortcut.Add_Click({
         try {
             $desktopPath = [Environment]::GetFolderPath("Desktop")
             $shortcutPath = Join-Path $desktopPath "GlazeWM Konfig.lnk"
-            New-ShortcutLink -ShortcutPath $shortcutPath -FileNameBase "glazewm_launcher" -IrmUrl "https://raw.githubusercontent.com/kud3n013/glazewm-konfig/main/glazewm-konfig.ps1" -RequiresAdmin $false
+            New-ShortcutLink -ShortcutPath $shortcutPath -FileNameBase "glazewm_launcher" -IrmUrl "https://raw.githubusercontent.com/kud3n013/glazewm-konfig/main/glazewm-konfig.ps1" -RequiresAdmin $true
             
             Write-Host "Created shortcut at $shortcutPath" -ForegroundColor Green
             $BtnCreateGlazeWMShortcut.Content = "Shortcut Created"
@@ -1549,7 +1922,7 @@ $BtnCreateGlazeWMShortcut.Add_Click({
         $PowerShell.AddScript({
                 Start-Sleep -Seconds 2
                 $Form.Dispatcher.Invoke({
-                        $BtnCreateGlazeWMShortcut.Content = "Create GlazeWM Konfig Shortcut (.lnk)"
+                        $BtnCreateGlazeWMShortcut.Content = "Create Shortcut"
                         $BtnCreateGlazeWMShortcut.IsEnabled = $true
                     })
             }) | Out-Null

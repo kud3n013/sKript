@@ -36,6 +36,16 @@
       "id": "extras/thunderbird"
     },
     {
+      "name": "Vesktop",
+      "type": "scoop",
+      "id": "extras/vesktop"
+    },
+    {
+      "name": "WeChat",
+      "type": "scoop",
+      "id": "extras/wechat"
+    },
+    {
       "name": "Zalo",
       "type": "scoop",
       "id": "kud3n013_icekream/zalo"
@@ -51,6 +61,11 @@
       "name": "Git",
       "type": "scoop",
       "id": "main/git"
+    },
+    {
+      "name": "Cursor",
+      "type": "scoop",
+      "id": "extras/cursor"
     },
     {
       "name": "Neovim",
@@ -73,6 +88,21 @@
       "id": "main/python"
     },
     {
+      "name": "R",
+      "type": "scoop",
+      "id": "main/r"
+    },
+    {
+      "name": "RStudio",
+      "type": "scoop",
+      "id": "extras/rstudio"
+    },
+    {
+      "name": "RTools",
+      "type": "scoop",
+      "id": "main/rtools"
+    },
+    {
       "name": "Rust",
       "type": "scoop",
       "id": "main/rust"
@@ -81,6 +111,11 @@
       "name": "VSCodium",
       "type": "scoop",
       "id": "extras/vscodium"
+    },
+    {
+      "name": "Warp Terminal",
+      "type": "scoop",
+      "id": "extras/warp-terminal"
     },
     {
       "name": "Windows Terminal",
@@ -98,6 +133,26 @@
       "name": "Claude",
       "type": "scoop",
       "id": "extras/claude"
+    },
+    {
+      "name": "Claude Code",
+      "type": "scoop",
+      "id": "main/claude-code"
+    },
+    {
+      "name": "Codex",
+      "type": "scoop",
+      "id": "main/codex"
+    },
+    {
+      "name": "Copilot CLI",
+      "type": "scoop",
+      "id": "main/copilot-cli"
+    },
+    {
+      "name": "Kimi CLI",
+      "type": "scoop",
+      "id": "main/kimi-cli"
     },
     {
       "name": "LM Studio",
@@ -164,24 +219,9 @@
       "id": "extras/autohotkey"
     },
     {
-      "name": "File Converter",
-      "type": "scoop",
-      "id": "nonportable/file-converter-np"
-    },
-    {
-      "name": "FilePilot",
-      "type": "scoop",
-      "id": "anderlli0053_DEV-tools/filepilot"
-    },
-    {
       "name": "Flow Launcher",
       "type": "scoop",
       "id": "extras/flow-launcher"
-    },
-    {
-      "name": "Free Download Manager",
-      "type": "scoop",
-      "id": "extras/freedownloadmanager"
     },
     {
       "name": "Office Tool Plus",
@@ -204,6 +244,11 @@
       "id": "kud3n013_icekream/unikey"
     },
     {
+      "name": "Ventoy",
+      "type": "scoop",
+      "id": "extras/ventoy"
+    },
+    {
       "name": "Wacom Tablet Driver",
       "type": "scoop",
       "id": "kud3n013_icekream/wacomtablet-driver"
@@ -219,14 +264,41 @@
       "id": "nirsoft/winlister"
     },
     {
+      "name": "Winutil",
+      "type": "scoop",
+      "id": "extras/winutil"
+    }
+  ],
+  "File Management": [
+    {
+      "name": "Dolphin",
+      "type": "scoop",
+      "id": "extras/dolphin"
+    },
+    {
+      "name": "File Converter",
+      "type": "scoop",
+      "id": "nonportable/file-converter-np"
+    },
+    {
+      "name": "FilePilot",
+      "type": "scoop",
+      "id": "anderlli0053_DEV-tools/filepilot"
+    },
+    {
+      "name": "Free Download Manager",
+      "type": "scoop",
+      "id": "extras/freedownloadmanager"
+    },
+    {
       "name": "WinRAR",
       "type": "scoop",
       "id": "extras/winrar"
     },
     {
-      "name": "Winutil",
+      "name": "Yazi",
       "type": "scoop",
-      "id": "extras/winutil"
+      "id": "main/yazi"
     }
   ],
   "Ricing": [
@@ -288,6 +360,11 @@
       "id": "extras/firefox"
     },
     {
+      "name": "Chromium",
+      "type": "scoop",
+      "id": "extras/chromium"
+    },
+    {
       "name": "Google Chrome",
       "type": "scoop",
       "id": "extras/googlechrome"
@@ -323,6 +400,11 @@
       "name": "Office 365 Apps",
       "type": "scoop",
       "id": "nonportable/office-365-apps-np"
+    },
+    {
+      "name": "Okular",
+      "type": "scoop",
+      "id": "extras/okular"
     },
     {
       "name": "OpenOffice",
@@ -394,6 +476,11 @@
       "id": "extras/inkscape"
     },
     {
+      "name": "Godot",
+      "type": "scoop",
+      "id": "extras/godot"
+    },
+    {
       "name": "Krita",
       "type": "scoop",
       "id": "extras/krita"
@@ -409,6 +496,21 @@
       "name": "Epic Games Launcher",
       "type": "scoop",
       "id": "games/epic-games-launcher"
+    },
+    {
+      "name": "Playnite",
+      "type": "scoop",
+      "id": "extras/playnite"
+    },
+    {
+      "name": "PrismLauncher",
+      "type": "scoop",
+      "id": "games/prismlauncher"
+    },
+    {
+      "name": "R2Modman",
+      "type": "scoop",
+      "id": "games/r2modman"
     },
     {
       "name": "Steam",
@@ -446,6 +548,11 @@
       "name": "Vencord Installer",
       "type": "scoop",
       "id": "extras/vencord-installer"
+    },
+    {
+      "name": "MP3Tag",
+      "type": "scoop",
+      "id": "extras/mp3tag"
     },
     {
       "name": "VLC",

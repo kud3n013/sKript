@@ -281,6 +281,11 @@
       "id": "extras/dolphin"
     },
     {
+      "name": "File",
+      "type": "scoop",
+      "id": "main/file"
+    },
+    {
       "name": "File Converter",
       "type": "scoop",
       "id": "nonportable/file-converter-np"
